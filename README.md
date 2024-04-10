@@ -27,7 +27,7 @@ Diseñar e implementar un sistema básico de IA para el aliado que le permita se
 Implementar la lógica para configurar diferentes comportamientos de la IA del aliado.
 
 Semana 5: Pulido de Mecánicas y Pruebas Iniciales:
-Refinar el movimiento del personaje y la IA del aliado según las prueba.
+Refinar el movimiento del personaje y la IA del aliado según las pruebas.
 Realizar pruebas iniciales de jugabilidad para identificar y corregir errores.
 
 Iteración 3: Expansión de Mecánicas y Contenido (4 semanas)
