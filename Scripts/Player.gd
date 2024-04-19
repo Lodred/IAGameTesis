@@ -2,29 +2,38 @@ extends CharacterBody2D
 @onready var animated_sprite = $Sprite
 @onready var anim = $AnimationPlayer
 @onready var animTree = $AnimationTree
+@onready var hitbox = $PlayerHitbox
 
-@export var Speed: int = 50
-@export var Friction: float = 0.15
-@export var Acceleration: int = 40
+@export var health: int = 100
+@export var speed: int = 50
+@export var damage: int = 5
 
 var knockback_direction = Vector2.ZERO
 var knockback = Vector2.ZERO
-var is_moving = false
+
 @export var is_attacking = false
-var is_death = false
+@export var enemy_in_range = false
+@export var attack_cooldown = false
+@export var is_alive = true
 
 func _ready():
 	# Ensure AnimationTree is active
 	$AnimationTree.active = true
 
 func _physics_process(delta):
-	if not is_death:
+	if is_alive == true:
+		if health <= 0:
+			health = 0
+			is_alive = false
+			print("Player has been killed")
+			self.queue_free()
+			#Death Animation
+			#End Screen
 		if is_attacking == false:
 			# Movement
 			move_player()
 		# Attack
-		if Input.is_action_just_pressed("Attack"):
-			is_attacking = true
+		if Input.is_action_just_pressed("Attack") and attack_cooldown == false:
 			attack()
 
 func move_player():
@@ -32,7 +41,7 @@ func move_player():
 	input_vector.x = Input.get_action_strength("Right") - Input.get_action_strength("Left")
 	input_vector.y = Input.get_action_strength("Down") - Input.get_action_strength("Up")
 
-	velocity = input_vector.normalized() * Speed
+	velocity = input_vector.normalized() * speed
 
 	if input_vector == Vector2.ZERO:
 		$AnimationTree.get("parameters/playback").travel("Idle")
@@ -44,22 +53,42 @@ func move_player():
 
 	move_and_slide()
 
-func attack():
-	# Trigger attack animation
-	$AnimationTree.get("parameters/playback").travel("Stab_Attack")
-	# Apply attack to nearby hitboxes
-	var attack_area = $Marker2D/AttackHitbox
-
-func Finish_Attack():
+func finish_attack():
 	is_attacking = false
 
-# Signal for taking damage
-func _on_HitboxComponent_health_changed(new_health):
-	if new_health <= 0:
-		die()
+func _on_hitbox_body_entered(body):
+	if body.has_method("enemy"):
+		enemy_in_range = true
 
-# Handle death
-func die():
-	is_death = true
-	# Play death animation or perform other death-related actions
+
+func _on_hitbox_body_exited(body):
+	var enemies_in_range = 0
+	for otherbody in hitbox.get_overlapping_bodies():
+		if otherbody.has_method("enemy"):
+			enemies_in_range = enemies_in_range + 1
+	if enemies_in_range == 0:
+		if body.has_method("enemy"):
+			enemy_in_range = false
+	else:
+		pass
+
+func attack():
+	is_attacking = true
+	attack_cooldown = true
+	$AttackCooldown.start()
+	# Trigger attack animation
+	$AnimationTree.get("parameters/playback").travel("Stab_Attack")
+	for otherbody in hitbox.get_overlapping_bodies():
+		if otherbody.has_method("enemy_attack") and otherbody.has_method("enemy"):
+			otherbody.enemy_attack(damage)
+
+func enemy_attack(damage):
+	if enemy_in_range:
+		health = health - damage
+		print("Player health " +str(health))
+	
+func player():
 	pass
+
+func _on_attack_cooldown_timeout():
+	attack_cooldown = false

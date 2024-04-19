@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://i2w2m3kmg7nr"]
+[gd_scene load_steps=36 format=3 uid="uid://i2w2m3kmg7nr"]
 
 [ext_resource type="Texture2D" uid="uid://6p6vsayenq76" path="res://Assets/Sprites/Human.png" id="1_la6a4"]
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_o63jv"]
@@ -279,6 +279,8 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 [sub_resource type="CircleShape2D" id="CircleShape2D_kt8gw"]
 radius = 55.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_wsu6n"]
+
 [node name="Enemy" type="CharacterBody2D"]
 y_sort_enabled = true
 motion_mode = 1
@@ -317,7 +319,7 @@ z_index = 100
 material = SubResource("ShaderMaterial_ws7ul")
 texture = ExtResource("7_u4e8t")
 
-[node name="Hitbox" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
 scale = Vector2(0.45, 0.45)
 shape = SubResource("CircleShape2D_gpxov")
@@ -329,6 +331,10 @@ libraries = {
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../Sprite/Body")
+libraries = {
+"": SubResource("AnimationLibrary_tbodd")
+}
 tree_root = SubResource("AnimationNodeStateMachine_hys64")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Idle/blend_position = Vector2(-0.00160003, 0.982533)
@@ -338,6 +344,19 @@ parameters/Run/blend_position = Vector2(0, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea"]
 shape = SubResource("CircleShape2D_kt8gw")
+debug_color = Color(0, 0.643137, 0.294118, 0.419608)
+
+[node name="EnemyHitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitbox"]
+shape = SubResource("CircleShape2D_wsu6n")
+debug_color = Color(0.94902, 0.176471, 0.356863, 0.419608)
+
+[node name="AttackCooldown" type="Timer" parent="."]
+wait_time = 0.7
 
 [connection signal="body_entered" from="PlayerDetectionArea" to="." method="_on_player_detection_area_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionArea" to="." method="_on_player_detection_area_exited"]
+[connection signal="body_entered" from="EnemyHitbox" to="." method="_on_enemy_hitbox_body_entered"]
+[connection signal="body_exited" from="EnemyHitbox" to="." method="_on_enemy_hitbox_body_exited"]
+[connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
