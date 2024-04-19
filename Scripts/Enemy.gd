@@ -50,6 +50,7 @@ func accelerate_towards_point(point, delta):
 	animTree.get("parameters/playback").travel("Run")
 	animTree.set("parameters/Idle/blend_position", move_direction)
 	animTree.set("parameters/Run/blend_position", move_direction)
+	animTree.set("parameters/Stab_Attack/blend_position", move_direction)
 	
 func _on_player_detection_area_body_entered(body):
 	if body.name == "Player":
@@ -80,9 +81,14 @@ func attack():
 	is_attacking = true
 	attack_cooldown = true
 	$AttackCooldown.start()
+	# Trigger attack animation
+	$AnimationTree.get("parameters/playback").travel("Stab_Attack")
 	for otherbody in hitbox.get_overlapping_bodies():
 		if otherbody.has_method("enemy_attack") and (otherbody.has_method("player") or otherbody.has_method("ally")):
 			otherbody.enemy_attack(damage)
+
+func finish_attack():
+	is_attacking = false
 
 func enemy_attack(damage):
 	if enemy_in_range:
@@ -90,7 +96,6 @@ func enemy_attack(damage):
 		print("Enemy health " + str(health))
 
 func _on_attack_cooldown_timeout():
-	is_attacking = false
 	attack_cooldown = false
 
 func enemy():

@@ -53,9 +53,6 @@ func move_player():
 
 	move_and_slide()
 
-func finish_attack():
-	is_attacking = false
-
 func _on_hitbox_body_entered(body):
 	if body.has_method("enemy"):
 		enemy_in_range = true
@@ -81,6 +78,9 @@ func attack():
 	for otherbody in hitbox.get_overlapping_bodies():
 		if otherbody.has_method("enemy_attack") and otherbody.has_method("enemy"):
 			otherbody.enemy_attack(damage)
+
+func finish_attack():
+	is_attacking = false
 
 func enemy_attack(damage):
 	if enemy_in_range:

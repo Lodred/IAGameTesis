@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://dbslkb3e7y3q6"]
+[gd_scene load_steps=47 format=3 uid="uid://dbslkb3e7y3q6"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_lnebl"]
 [ext_resource type="Texture2D" uid="uid://1l2wukecxxx2" path="res://Assets/Sprites/Skeleton.png" id="2_nm1y8"]
@@ -277,21 +277,6 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_yk3pv"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../Item:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-6, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_3q43t"]
@@ -972,7 +957,6 @@ _data = {
 "Idle_Left": SubResource("Animation_yapm6"),
 "Idle_Right": SubResource("Animation_0si20"),
 "Idle_Up": SubResource("Animation_4kafv"),
-"RESET": SubResource("Animation_yk3pv"),
 "Run_Down": SubResource("Animation_3q43t"),
 "Run_Left": SubResource("Animation_krki8"),
 "Run_Right": SubResource("Animation_qvuih"),
@@ -1088,6 +1072,7 @@ z_index = 1
 texture = ExtResource("2_nm1y8")
 hframes = 4
 vframes = 14
+frame = 14
 script = ExtResource("3_t70k0")
 
 [node name="Silhouette" type="Sprite2D" parent="Sprite/Body"]
@@ -1102,7 +1087,8 @@ texture = ExtResource("3_48lhx")
 
 [node name="Item" type="Sprite2D" parent="Sprite"]
 z_index = 1
-position = Vector2(-6, 0)
+position = Vector2(-6, 4)
+scale = Vector2(1, -1)
 texture = ExtResource("4_4nbw2")
 
 [node name="Silhouette" type="Sprite2D" parent="Sprite/Item"]
@@ -1136,7 +1122,7 @@ tree_root = SubResource("AnimationNodeStateMachine_f2yj1")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Run/blend_position = Vector2(0, 0)
-parameters/Stab_Attack/blend_position = Vector2(0, 0)
+parameters/Stab_Attack/blend_position = Vector2(-1, -0.00440526)
 
 [node name="AttackCooldown" type="Timer" parent="."]
 wait_time = 0.6
