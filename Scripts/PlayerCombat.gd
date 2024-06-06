@@ -59,6 +59,7 @@ func player():
 	pass
 
 func _gethurt():
+	is_hurting = true
 	$AnimationTree.get("parameters/playback").travel("Hurt")
  
 func focus():
@@ -75,7 +76,7 @@ func die():
 	State.Player_alive = false
 	$AnimationTree.get("parameters/playback").travel("Dead")
 
-func take_damage(damage, enemy_name, target_name):
+func take_damage(damage, attacker_name, target_name):
 	if State.Player_current_health - damage <= 0:
 		combat_node.display_text("Player was defeated!")
 		die()
@@ -89,5 +90,6 @@ func take_damage(damage, enemy_name, target_name):
 				#combat_node.win_battle()
 	else:
 		State.Player_current_health = State.Player_current_health - damage
-		combat_node.display_text(enemy_name + " attacks " + target_name + " for " + str(damage) + " damage!")
+		combat_node.display_text(attacker_name + " attacks " + target_name + " for " + str(damage) + " damage!")
+		_gethurt()
 	pass

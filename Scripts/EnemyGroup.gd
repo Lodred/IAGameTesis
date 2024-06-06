@@ -96,4 +96,22 @@ func player_attack(value):
 		elif enemies[focused_enemy] and enemies[focused_enemy].has_method("take_damage") and enemies[focused_enemy].is_alive == true:
 			combat_node.display_text("You attack " + enemies[focused_enemy].enemy_name+ ", dealing %d damage!" % [value])
 			enemies[focused_enemy].take_damage(value)
-	
+
+func ally_attack(target_enemy, value):
+	if enemies.size() > 0:
+		#If the enemy will be killed, kill enemy and remove from array
+		if enemies[target_enemy] and enemies[target_enemy].current_health - value <= 0:
+			combat_node.display_text(enemies[target_enemy].enemy_name+ " was defeated!")
+			enemies[target_enemy].take_damage(value)
+			remove_turn(enemies[target_enemy].name)
+			enemies.remove_at(target_enemy)
+			focused_enemy = 0
+			#If the array is empty the battle is won
+			if enemies.size() <= 0:
+				enemies_left = false
+				if combat_node and combat_node.has_method("win_battle"):
+					combat_node.win_battle()
+		#If the enemy will not be killed, the enemy takes damage
+		elif enemies[target_enemy] and enemies[target_enemy].has_method("take_damage") and enemies[target_enemy].is_alive == true:
+			combat_node.display_text("Witch attacks " + enemies[target_enemy].enemy_name+ ", dealing %d damage!" % [value])
+			enemies[target_enemy].take_damage(value)

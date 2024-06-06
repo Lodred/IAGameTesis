@@ -139,7 +139,7 @@ func perform_action(character):
 		enemy_turn(character)
 
 func win_battle():
-	ActionPanel.hide()
+	await Textbox_closed
 	battleover = true
 	display_text("All enemies have been slain!")
 	await Textbox_closed
@@ -159,7 +159,7 @@ func calculate_attack_damage(min_damage, max_damage) -> int:
 func enemy_turn(character):
 	if battleover == false:
 		await get_tree().create_timer(0.3).timeout
-		var target = choose_random_target()
+		var target = choose_random_ally()
 		var damage = calculate_attack_damage(character.enemy_data.min_damage, character.enemy_data.max_damage)
 		target.take_damage(damage, character.name, target.name)
 		#display_text(character.name + " do nothing!")
@@ -172,7 +172,10 @@ func enemy_turn(character):
 func ally_turn():
 	if battleover == false:
 		await get_tree().create_timer(0.3).timeout
-		display_text("Witch do nothing!")
+		var target_enemy = choose_random_enemy()
+		var damage = calculate_attack_damage(State.Ally_min_damage, State.Ally_max_damage)
+		EnemyGroup.ally_attack(target_enemy, damage)
+		#display_text("Witch do nothing!")
 		await Textbox_closed
 		emit_signal("Turn_completed")
 
@@ -182,7 +185,7 @@ func player_turn():
 		if EnemyGroup and EnemyGroup.focusing_enemy == false and EnemyGroup.focused_enemy != -1 and EnemyGroup.has_method("show_focus") and running == false:
 				EnemyGroup.show_focus(EnemyGroup.focused_enemy)
 
-func choose_random_target():
+func choose_random_ally():
 	var random_index = randi() % 2  # Randomly selects 0 or 1
 	if random_index == 0:
 		if PlayerGroup.get_child(0).is_alive == true:
@@ -194,6 +197,11 @@ func choose_random_target():
 			return PlayerGroup.get_child(1)  # Ally is at index 1 in PlayerGroup
 		else:
 			return PlayerGroup.get_child(0)  # Player is at index 0 in PlayerGroup
+
+func choose_random_enemy():
+	var enemies = EnemyGroup.enemies
+	var random_index = randi() % enemies.size()
+	return random_index
 
 func _on_attack_pressed():
 	#display_text("You attack enemy, dealing %d damage!" % [State.Player_damage])
