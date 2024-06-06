@@ -4,9 +4,7 @@ extends CharacterBody2D
 @onready var animTree = $AnimationTree
 @onready var hitbox = $PlayerHitbox
 
-@export var health: int = 100
 @export var speed: int = 50
-@export var damage: int = 5
 
 var knockback_direction = Vector2.ZERO
 var knockback = Vector2.ZERO
@@ -14,27 +12,18 @@ var knockback = Vector2.ZERO
 @export var is_attacking = false
 @export var enemy_in_range = false
 @export var attack_cooldown = false
-@export var is_alive = true
 
 func _ready():
 	# Ensure AnimationTree is active
 	$AnimationTree.active = true
 
 func _physics_process(delta):
-	if is_alive == true:
-		if health <= 0:
-			health = 0
-			is_alive = false
-			print("Player has been killed")
-			self.queue_free()
-			#Death Animation
-			#End Screen
-		if is_attacking == false:
-			# Movement
-			move_player()
-		# Attack
-		if Input.is_action_just_pressed("Attack") and attack_cooldown == false:
-			attack()
+	# Movement
+	if is_attacking == false:
+		move_player()
+	# Attack
+	if Input.is_action_just_pressed("Attack") and attack_cooldown == false:
+		attack()
 
 func move_player():
 	var input_vector = Vector2.ZERO
@@ -76,17 +65,17 @@ func attack():
 	# Trigger attack animation
 	$AnimationTree.get("parameters/playback").travel("Stab_Attack")
 	for otherbody in hitbox.get_overlapping_bodies():
-		if otherbody.has_method("enemy_attack") and otherbody.has_method("enemy"):
-			otherbody.enemy_attack(damage)
+		if otherbody.has_method("enemy"):
+			await get_tree().create_timer(0.8).timeout
+			State.Enemies = otherbody.Enemies
+			State.player_position = self.position
+			State.enemy_to_remove_id.append(otherbody.id)
+			get_tree().change_scene_to_file("res://Scenes/Combat.tscn")
+			#otherbody.enemy_attack(damage)
 
 func finish_attack():
 	is_attacking = false
 
-func enemy_attack(damage):
-	if enemy_in_range:
-		health = health - damage
-		print("Player health " +str(health))
-	
 func player():
 	pass
 

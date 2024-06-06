@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bqhoh51l8fx1h"]
+
+[ext_resource type="Script" path="res://Entities/BaseEnemy.gd" id="1_wtoc8"]
+[ext_resource type="Texture2D" uid="uid://6p6vsayenq76" path="res://Assets/Sprites/Human.png" id="2_c6via"]
+
+[resource]
+script = ExtResource("1_wtoc8")
+name = "Enemy"
+texture = ExtResource("2_c6via")
+max_health = 20
+max_damage = 4
+min_damage = 2
+speed = 6

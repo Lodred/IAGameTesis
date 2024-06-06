@@ -1,0 +1,385 @@
+[gd_scene load_steps=17 format=3 uid="uid://bwrpldnxp84nb"]
+
+[ext_resource type="Texture2D" uid="uid://dt8xhrg4pf8qa" path="res://Assets/Background/battleback1.png" id="1_34wcb"]
+[ext_resource type="Script" path="res://Scenes/Combat.gd" id="1_75bnx"]
+[ext_resource type="FontFile" uid="uid://b7givhsythdfv" path="res://Assets/Fonts/NESCyrillic.ttf" id="2_1ux7k"]
+[ext_resource type="Resource" uid="uid://b8d61i6pytcal" path="res://Entities/Resources/Guard.tres" id="2_ky36b"]
+[ext_resource type="Texture2D" uid="uid://ddupqweb3gluf" path="res://Assets/GUI/GUI.png" id="2_lmv22"]
+[ext_resource type="Resource" uid="uid://bqhoh51l8fx1h" path="res://Entities/Resources/Peasant.tres" id="3_6ghcy"]
+[ext_resource type="FontFile" uid="uid://c071gd4te30u" path="res://Assets/Fonts/Adventurer.ttf" id="4_o2niq"]
+[ext_resource type="PackedScene" uid="uid://cyc77rky143pc" path="res://Entities/Scenes/EnemyGroup.tscn" id="5_bfbqa"]
+[ext_resource type="PackedScene" uid="uid://boc1jny6kq7di" path="res://Entities/Scenes/PlayerGroup.tscn" id="5_ere8x"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xwxnn"]
+texture = ExtResource("2_lmv22")
+texture_margin_left = 6.0
+texture_margin_top = 5.0
+texture_margin_right = 6.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(0, 96, 48, 32)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yp800"]
+bg_color = Color(0.698039, 0, 0.0431373, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(0.219608, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 1
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ucpkj"]
+bg_color = Color(0, 1, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(0, 0.223529, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dd638"]
+bg_color = Color(0.180392, 0.207843, 0.301961, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(0.0705882, 0.0901961, 0.121569, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 1
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_055kq"]
+bg_color = Color(1, 1, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(1, 0.698039, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 1
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x4i1e"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(0.745098, 0.843137, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 1
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7kbn"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+
+[node name="Combat" type="Node2D"]
+script = ExtResource("1_75bnx")
+Enemies = Array[Resource]([ExtResource("2_ky36b"), ExtResource("3_6ghcy"), ExtResource("2_ky36b")])
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="TextureRect" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_34wcb")
+metadata/_edit_lock_ = true
+
+[node name="CombatPanel" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -120.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_xwxnn")
+metadata/_edit_use_anchors_ = true
+
+[node name="CombatItems" type="HBoxContainer" parent="CanvasLayer/Control/CombatPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.015
+anchor_top = 0.175
+anchor_right = 0.985
+anchor_bottom = 0.825
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="HealthPanel" type="VBoxContainer" parent="CanvasLayer/Control/CombatPanel/CombatItems"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayerHealth" type="HBoxContainer" parent="CanvasLayer/Control/CombatPanel/CombatItems/HealthPanel"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/CombatPanel/CombatItems/HealthPanel/PlayerHealth"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.3
+theme_override_fonts/font = ExtResource("2_1ux7k")
+theme_override_font_sizes/font_size = 30
+text = "Player"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerHealthBar" type="ProgressBar" parent="CanvasLayer/Control/CombatPanel/CombatItems/HealthPanel/PlayerHealth"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_yp800")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ucpkj")
+max_value = 80.0
+value = 50.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/CombatPanel/CombatItems/HealthPanel/PlayerHealth/PlayerHealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0.38, 0.38, 0.38, 1)
+theme_override_fonts/font = ExtResource("2_1ux7k")
+theme_override_font_sizes/font_size = 28
+text = "HP: 80/80"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="AllyHealth" type="HBoxContainer" parent="CanvasLayer/Control/CombatPanel/CombatItems/HealthPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/CombatPanel/CombatItems/HealthPanel/AllyHealth"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.3
+theme_override_fonts/font = ExtResource("2_1ux7k")
+theme_override_font_sizes/font_size = 30
+text = "Ally"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AllyHealthBar" type="ProgressBar" parent="CanvasLayer/Control/CombatPanel/CombatItems/HealthPanel/AllyHealth"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_yp800")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ucpkj")
+max_value = 80.0
+value = 40.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/CombatPanel/CombatItems/HealthPanel/AllyHealth/AllyHealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0.38, 0.38, 0.38, 1)
+theme_override_fonts/font = ExtResource("2_1ux7k")
+theme_override_font_sizes/font_size = 28
+text = "HP: 80/80"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="ActionPanel" type="VBoxContainer" parent="CanvasLayer/Control/CombatPanel/CombatItems"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ActionPanelUp" type="HBoxContainer" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Attack" type="Button" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelUp"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_1ux7k")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_dd638")
+theme_override_styles/hover = SubResource("StyleBoxFlat_055kq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_x4i1e")
+text = "Attack"
+
+[node name="Defend" type="Button" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelUp"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_1ux7k")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_dd638")
+theme_override_styles/hover = SubResource("StyleBoxFlat_055kq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_x4i1e")
+text = "Defend"
+
+[node name="ActionPanelDown" type="HBoxContainer" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Item" type="Button" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_1ux7k")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_dd638")
+theme_override_styles/hover = SubResource("StyleBoxFlat_055kq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_x4i1e")
+text = "Item"
+
+[node name="Run" type="Button" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_1ux7k")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_dd638")
+theme_override_styles/hover = SubResource("StyleBoxFlat_055kq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_x4i1e")
+text = "Run"
+
+[node name="Textbox" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.02
+anchor_right = 0.98
+anchor_bottom = 0.02
+offset_left = -1.0
+offset_right = 1.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_h7kbn")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Textbox"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.01
+anchor_top = 0.1
+anchor_right = 0.99
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_o2niq")
+theme_override_font_sizes/font_size = 30
+text = "SOME GUARDS APPEARED!"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/Textbox"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -18.96
+offset_top = -36.96
+offset_right = -5.95996
+offset_bottom = -5.96
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_o2niq")
+theme_override_font_sizes/font_size = 30
+text = ">
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="EnemyPos" type="Control" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 16.0
+offset_right = 40.0
+offset_bottom = 56.0
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="EnemyGroup" parent="CanvasLayer/Control/EnemyPos" instance=ExtResource("5_bfbqa")]
+position = Vector2(217, 3)
+
+[node name="PlayerPos" type="Control" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayerGroup" parent="CanvasLayer/Control/PlayerPos" instance=ExtResource("5_ere8x")]
+position = Vector2(-145, 10)
+
+[connection signal="pressed" from="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelUp/Attack" to="." method="_on_attack_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown/Run" to="." method="_on_run_pressed"]

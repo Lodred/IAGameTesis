@@ -4,9 +4,12 @@ extends CharacterBody2D
 @onready var animTree = $AnimationTree
 @onready var hitbox = $EnemyHitbox
 
+@export var id: int = 0
 @export var health: int = 25
 @export var speed: int = 40
-@export var damage: int = 5
+
+#Delete all non related to movement stats
+@export var Enemies: Array[Resource] = []
 
 var knockback_direction = Vector2.ZERO
 var knockback = Vector2.ZERO
@@ -17,27 +20,21 @@ var see_player = false
 @export var is_attacking = false
 @export var enemy_in_range = false
 @export var attack_cooldown = false
-@export var is_alive = true
 
 func _ready():
 	animTree.active = true
 	
 func _physics_process(delta):
-	if is_alive:
-		if health <= 0:
-			health = 0
-			is_alive = false
-			print("Enemy has been killed")
-			self.queue_free()
-		if enemy_in_range == true and attack_cooldown == false:
-				attack()
-		if is_attacking == false:
-			if see_player == true:
-				var player = get_parent().get_node("Player")
-				accelerate_towards_point(player, delta)
-				move_and_slide()
-			else:
-				animTree.get("parameters/playback").travel("Idle")
+	await get_tree().create_timer(0.8).timeout
+	if enemy_in_range == true and attack_cooldown == false:
+			attack()
+	if is_attacking == false:
+		if see_player == true:
+			var player = get_parent().get_node("Player")
+			accelerate_towards_point(player, delta)
+			move_and_slide()
+		else:
+			animTree.get("parameters/playback").travel("Idle")
 		
 		knockback_direction = move_direction
 		knockback = knockback.move_toward(Vector2.ZERO, 200*delta)
@@ -84,34 +81,19 @@ func attack():
 	# Trigger attack animation
 	$AnimationTree.get("parameters/playback").travel("Stab_Attack")
 	for otherbody in hitbox.get_overlapping_bodies():
-		if otherbody.has_method("enemy_attack") and (otherbody.has_method("player") or otherbody.has_method("ally")):
-			otherbody.enemy_attack(damage)
+		if (otherbody.has_method("player") or otherbody.has_method("ally")):
+			await get_tree().create_timer(0.8).timeout
+			State.Enemies = Enemies
+			State.player_position = otherbody.position
+			State.enemy_to_remove_id.append(id)
+			get_tree().change_scene_to_file("res://Scenes/Combat.tscn")
+			#otherbody.enemy_attack(damage)
 
 func finish_attack():
 	is_attacking = false
-
-func enemy_attack(damage):
-	if enemy_in_range:
-		health = health - damage
-		print("Enemy health " + str(health))
 
 func _on_attack_cooldown_timeout():
 	attack_cooldown = false
 
 func enemy():
 	pass
-	
-
-#func _physics_process(delta):
-	#if enemy_in_range == true and attack_cooldown == false:
-	#		attack()
-	#if is_attacking == false:
-	#if see_player == true:
-	#	var player = get_parent().get_node("Player")
-	#	accelerate_towards_point(player, delta)
-	#	move_and_slide()
-	#else:
-	#	animTree.get("parameters/playback").travel("Idle")
-	#
-	#knockback_direction = move_direction
-	#knockback = knockback.move_toward(Vector2.ZERO, 200*delta)

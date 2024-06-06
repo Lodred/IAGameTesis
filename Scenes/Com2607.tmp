@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3 uid="uid://bwrpldnxp84nb"]
+
+[ext_resource type="Texture2D" uid="uid://bgxxftp4gkg05" path="res://Assets/Background/1.png" id="1_wndg2"]
+[ext_resource type="Texture2D" uid="uid://8remv8ocvgyk" path="res://Assets/Background/2.png" id="2_lq2fw"]
+[ext_resource type="Texture2D" uid="uid://dggar23ox3kpa" path="res://Assets/Background/3.png" id="3_krf65"]
+[ext_resource type="PackedScene" uid="uid://cyc77rky143pc" path="res://Entities/EnemyGroup.tscn" id="5_bfbqa"]
+[ext_resource type="PackedScene" uid="uid://boc1jny6kq7di" path="res://Entities/PlayerGroup.tscn" id="5_ere8x"]
+
+[node name="Combat" type="Node2D"]
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="Sky" type="Sprite2D" parent="Background"]
+position = Vector2(575, 325)
+scale = Vector2(2, 2)
+texture = ExtResource("1_wndg2")
+
+[node name="Clouds" type="Sprite2D" parent="Background"]
+z_index = 1
+position = Vector2(575, 325)
+scale = Vector2(2, 2)
+texture = ExtResource("2_lq2fw")
+
+[node name="Fields" type="Sprite2D" parent="Background"]
+z_index = 3
+position = Vector2(575, 325)
+scale = Vector2(2, 2)
+texture = ExtResource("3_krf65")
+
+[node name="EnemyGroup" parent="." instance=ExtResource("5_bfbqa")]
+position = Vector2(200, 500)
+
+[node name="PlayerGroup" parent="." instance=ExtResource("5_ere8x")]
+position = Vector2(880, 500)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Actions" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -124.0
+offset_top = -117.0
+offset_right = -16.0
+offset_bottom = -11.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Attack" type="Button" parent="CanvasLayer/Actions"]
+layout_mode = 2
+text = "Attack"
+
+[node name="Defend" type="Button" parent="CanvasLayer/Actions"]
+layout_mode = 2
+disabled = true
+text = "Defend"
+
+[node name="Run" type="Button" parent="CanvasLayer/Actions"]
+layout_mode = 2
+disabled = true
+text = "Run"
