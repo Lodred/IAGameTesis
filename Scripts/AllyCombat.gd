@@ -8,7 +8,6 @@ extends CharacterBody2D
 var combat_node
 
 var speed: int = 9
-var accumulated_speed = 0
 var max_health = 10
 
 var current_health: float = State.Ally_max_health:
@@ -27,6 +26,7 @@ var knockback = Vector2.ZERO
 @export var is_attacking = false
 @export var is_hurting = false
 @export var is_alive = true
+@export var is_defending = false
 
 func _ready():
 	combat_node = get_node("/root/Combat")
@@ -78,18 +78,23 @@ func die():
 
 func take_damage(damage, attacker_name, target_name):
 	if State.Ally_current_health - damage <= 0:
-		combat_node.display_text("Ally was defeated!")
-		die()
-		State.Ally_current_health = 0
-		remove_turn("Ally")
-		combat_node.check_for_allies()
-		#If the array is empty the battle is Lost
-		#if enemies.size() <= 0:
-			#enemies_left = false
-			#if combat_node and combat_node.has_method("win_battle"):
-				#combat_node.win_battle()
+		if is_defending == true:
+			combat_node.display_text(attacker_name + " attacks " + target_name + " for " + str(damage) + " damage!")
+			await combat_node.Textbox_closed
+			combat_node.display_text(target_name + " defended!")
+		else:
+			combat_node.display_text("Ally was defeated!")
+			die()
+			State.Ally_current_health = 0
+			remove_turn("Ally")
+			combat_node.check_for_allies()
 	else:
-		State.Ally_current_health = State.Ally_current_health - damage
-		combat_node.display_text(attacker_name + " attacks " + target_name + " for " + str(damage) + " damage!")
-		_gethurt()
+		if is_defending == true:
+			combat_node.display_text(attacker_name + " attacks " + target_name + " for " + str(damage) + " damage!")
+			await combat_node.Textbox_closed
+			combat_node.display_text(target_name + " defended!")
+		else:
+			State.Ally_current_health = State.Ally_current_health - damage
+			combat_node.display_text(attacker_name + " attacks " + target_name + " for " + str(damage) + " damage!")
+			_gethurt()
 	pass

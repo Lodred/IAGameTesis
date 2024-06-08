@@ -82,23 +82,20 @@ func set_health(progress_bar, health, max_health):
 func initialize_turn_queue():
 	# Add enemies to the turn queue
 	for enemy in EnemyGroup.get_children():
-		enemy.accumulated_speed = 0
 		add_to_turn_queue(enemy)
 	# Add player and ally to the turn queue
 	for character in PlayerGroup.get_children():
-		character.accumulated_speed = 0
 		add_to_turn_queue(character)
+	sort_turn_queue()
 
 func add_to_turn_queue(character):
-	character.accumulated_speed += character.speed
 	turn_queue.append(character)
-	sort_turn_queue()
 
 func sort_turn_queue():
 	turn_queue.sort_custom(CharacterSort)
 
 func CharacterSort(a, b):
-	return a.accumulated_speed > b.accumulated_speed
+	return a.speed > b.speed
 
 func get_next_turn():
 	if turn_queue.size() > 0:
@@ -113,13 +110,6 @@ func handle_turns():
 		# Perform the character's action (implement this based on your game logic)
 		perform_action(current_character)
 		await Turn_completed
-		
-		# Accumulate speed for all characters
-		for character in turn_queue:
-			character.accumulated_speed += character.speed
-			
-		# Reset the accumulated speed for the character who took the turn
-		current_character.accumulated_speed = 0
 		
 		# Add character back to the turn queue
 		add_to_turn_queue(current_character)
@@ -139,7 +129,8 @@ func perform_action(character):
 		enemy_turn(character)
 
 func win_battle():
-	await Textbox_closed
+	while Textbox.visible:
+		await Textbox_closed
 	battleover = true
 	display_text("All enemies have been slain!")
 	await Textbox_closed
@@ -158,6 +149,8 @@ func calculate_attack_damage(min_damage, max_damage) -> int:
 
 func enemy_turn(character):
 	if battleover == false:
+		while Textbox.visible:
+			await Textbox_closed
 		await get_tree().create_timer(0.3).timeout
 		var target = choose_random_ally()
 		var damage = calculate_attack_damage(character.enemy_data.min_damage, character.enemy_data.max_damage)
@@ -171,6 +164,8 @@ func enemy_turn(character):
 
 func ally_turn():
 	if battleover == false:
+		while Textbox.visible:
+			await Textbox_closed
 		await get_tree().create_timer(0.3).timeout
 		var target_enemy = choose_random_enemy()
 		var damage = calculate_attack_damage(State.Ally_min_damage, State.Ally_max_damage)
@@ -181,6 +176,9 @@ func ally_turn():
 
 func player_turn():
 	if battleover == false:
+		while Textbox.visible:
+			await Textbox_closed
+		PlayerGroup.get_child(0).is_defending = false
 		ActionPanel.show()
 		if EnemyGroup and EnemyGroup.focusing_enemy == false and EnemyGroup.focused_enemy != -1 and EnemyGroup.has_method("show_focus") and running == false:
 				EnemyGroup.show_focus(EnemyGroup.focused_enemy)
@@ -218,6 +216,7 @@ func _on_defend_pressed():
 	EnemyGroup.hide_focus(EnemyGroup.focused_enemy)
 	display_text("You prepare to defend!")
 	await Textbox_closed
+	PlayerGroup.get_child(0).is_defending = true
 	emit_signal("Turn_completed")
 	#End Turn
 	pass # Replace with function body.
@@ -234,10 +233,12 @@ func _on_run_pressed():
 	#get_tree().quit()
 
 func check_for_allies():
-	await Textbox_closed
+	while Textbox.visible:
+		await Textbox_closed
 	if PlayerGroup.get_child(0).is_alive == false and PlayerGroup.get_child(1).is_alive == false:
 		battleover = true
 		display_text("All allies have been defeated!")
 		await Textbox_closed
 		await get_tree().create_timer(0.8).timeout
+		#Game Over Screen
 		get_tree().quit()

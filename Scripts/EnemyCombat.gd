@@ -10,7 +10,6 @@ extends CharacterBody2D
 @export var max_damage = 2
 @export var min_damage = 1
 @export var speed = 1
-@export var accumulated_speed = 0
 
 const BaseEnemy = preload("res://Entities/BaseEnemy.gd")
 @export var enemy_data: BaseEnemy
