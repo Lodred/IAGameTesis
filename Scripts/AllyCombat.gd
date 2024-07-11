@@ -27,6 +27,7 @@ var knockback = Vector2.ZERO
 @export var is_hurting = false
 @export var is_alive = true
 @export var is_defending = false
+@export var is_special = false
 
 func _ready():
 	combat_node = get_node("/root/Combat")
@@ -78,23 +79,40 @@ func die():
 
 func take_damage(damage, attacker_name, target_name):
 	if State.Ally_current_health - damage <= 0:
+		combat_node.display_text(attacker_name + " attacks " + target_name + " for " + str(damage) + " damage!")
+		await combat_node.Textbox_closed
 		if is_defending == true:
-			combat_node.display_text(attacker_name + " attacks " + target_name + " for " + str(damage) + " damage!")
-			await combat_node.Textbox_closed
-			combat_node.display_text(target_name + " defended!")
+			var end_damage = int(round(damage-2))
+			if State.Ally_current_health - end_damage <= 0:
+				combat_node.display_text("Ally was defeated!")
+				die()
+				State.Ally_current_health = 0
+				combat_node.set_health(combat_node.AllyHealth, State.Ally_current_health, State.AllyHealth_max_health)
+				remove_turn("Ally")
+				combat_node.check_for_allies()
+			else:
+				State.Ally_current_health = State.Ally_current_health - end_damage
+				combat_node.set_health(combat_node.AllyHealth, State.Ally_current_health, State.Ally_max_health)
+				combat_node.display_text(target_name + " defended and took " + str(end_damage) + " damage!")
+				_gethurt()
 		else:
 			combat_node.display_text("Ally was defeated!")
 			die()
 			State.Ally_current_health = 0
+			combat_node.set_health(combat_node.AllyHealth, State.Ally_current_health, State.Ally_max_health)
 			remove_turn("Ally")
 			combat_node.check_for_allies()
 	else:
 		if is_defending == true:
 			combat_node.display_text(attacker_name + " attacks " + target_name + " for " + str(damage) + " damage!")
+			var end_damage = int(round(damage-2))
 			await combat_node.Textbox_closed
-			combat_node.display_text(target_name + " defended!")
+			State.Ally_current_health = State.Ally_current_health - end_damage
+			combat_node.set_health(combat_node.AllyHealth, State.Ally_current_health, State.Ally_max_health)
+			combat_node.display_text(target_name + " defended and took " + str(end_damage) + " damage!")
+			_gethurt()
 		else:
 			State.Ally_current_health = State.Ally_current_health - damage
+			combat_node.set_health(combat_node.AllyHealth, State.Ally_current_health, State.Ally_max_health)
 			combat_node.display_text(attacker_name + " attacks " + target_name + " for " + str(damage) + " damage!")
 			_gethurt()
-	pass

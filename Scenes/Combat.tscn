@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://bwrpldnxp84nb"]
+[gd_scene load_steps=17 format=3 uid="uid://bwrpldnxp84nb"]
 
 [ext_resource type="Texture2D" uid="uid://dt8xhrg4pf8qa" path="res://Assets/Background/battleback1.png" id="1_34wcb"]
 [ext_resource type="Script" path="res://Scenes/Combat.gd" id="1_75bnx"]
 [ext_resource type="FontFile" uid="uid://b7givhsythdfv" path="res://Assets/Fonts/NESCyrillic.ttf" id="2_1ux7k"]
 [ext_resource type="Resource" uid="uid://b8d61i6pytcal" path="res://Entities/Resources/Guard.tres" id="2_ky36b"]
 [ext_resource type="Texture2D" uid="uid://ddupqweb3gluf" path="res://Assets/GUI/GUI.png" id="2_lmv22"]
+[ext_resource type="Script" path="res://Scripts/Simulation.gd" id="3_ixcmd"]
 [ext_resource type="FontFile" uid="uid://c071gd4te30u" path="res://Assets/Fonts/Adventurer.ttf" id="4_o2niq"]
 [ext_resource type="PackedScene" uid="uid://cyc77rky143pc" path="res://Entities/Scenes/EnemyGroup.tscn" id="5_bfbqa"]
 [ext_resource type="PackedScene" uid="uid://boc1jny6kq7di" path="res://Entities/Scenes/PlayerGroup.tscn" id="5_ere8x"]
@@ -114,6 +115,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("3_ixcmd")
 metadata/_edit_use_anchors_ = true
 
 [node name="Background" type="TextureRect" parent="CanvasLayer/Control"]
@@ -275,7 +277,7 @@ text = "Defend"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Item" type="Button" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown"]
+[node name="Special" type="Button" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -286,7 +288,7 @@ theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_dd638")
 theme_override_styles/hover = SubResource("StyleBoxFlat_055kq")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_x4i1e")
-text = "Item"
+text = "Special"
 
 [node name="Run" type="Button" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown"]
 layout_mode = 2
@@ -380,6 +382,40 @@ metadata/_edit_use_anchors_ = true
 [node name="PlayerGroup" parent="CanvasLayer/Control/PlayerPos" instance=ExtResource("5_ere8x")]
 position = Vector2(-145, 10)
 
+[node name="Panel" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -124.0
+offset_top = -150.0
+offset_right = -1.0
+offset_bottom = -119.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Simulate" type="Button" parent="CanvasLayer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_1ux7k")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_dd638")
+theme_override_styles/hover = SubResource("StyleBoxFlat_055kq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_x4i1e")
+text = "Simulate"
+
 [connection signal="pressed" from="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelUp/Attack" to="." method="_on_attack_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelUp/Defend" to="." method="_on_defend_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown/Special" to="." method="_on_special_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown/Run" to="." method="_on_run_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Panel/Simulate" to="." method="_on_simulate_pressed"]

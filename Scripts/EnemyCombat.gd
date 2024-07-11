@@ -31,6 +31,8 @@ var is_moving = false
 @export var is_attacking = false
 @export var is_hurting = false
 @export var is_alive = true
+@export var is_defending = false
+@export var is_special = false
 
 func _ready():
 	if enemy_data and enemy_data is BaseEnemy:
