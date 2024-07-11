@@ -3,6 +3,9 @@
 Tesis en Overleaf
 https://www.overleaf.com/read/wbxdgkqgndgx#1f72d9
 
+Estadisticas Q Table Google Colab
+https://colab.research.google.com/drive/1Ta8YQHZLWSFWL2oa4WWVIsyBfd4GDB2M?usp=sharing
+
 Planificación Incremental del Proyecto de Desarrollo de un Juego RPG 2D en Godot 4
 
 Iteración 1: Preparación y Mecánicas Básicas (2 semanas)
