@@ -493,13 +493,13 @@ func load_q_table_from_json(file_path):
 func save_q_tables():
 	ally_combat_number += 1
 	enemy_combat_number += 1
-	save_q_table_as_json("C:/Godot/Qtables/q_table_ally.json", q_table_ally, ally_combat_number, ally_accumulated_reward)
-	save_q_table_as_json("C:/Godot/Qtables/q_table_enemy.json", q_table_enemy, enemy_combat_number, enemy_accumulated_reward)
+	save_q_table_as_json("res://Qtables/q_table_ally.json", q_table_ally, ally_combat_number, ally_accumulated_reward)
+	save_q_table_as_json("res://Qtables/q_table_enemy.json", q_table_enemy, enemy_combat_number, enemy_accumulated_reward)
 
 # Load the Q-tables at the start of the game
 func load_q_tables():
-	var ally_data = load_q_table_from_json("C:/Godot/Qtables/q_table_ally.json")
-	var enemy_data = load_q_table_from_json("C:/Godot/Qtables/q_table_enemy.json")
+	var ally_data = load_q_table_from_json("res://Qtables/q_table_ally.json")
+	var enemy_data = load_q_table_from_json("res://Qtables/q_table_enemy.json")
 	
 	if ally_data.size() > 0:
 		var last_ally_entry = ally_data[ally_data.size() - 1]
