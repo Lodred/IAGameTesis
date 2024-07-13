@@ -12,6 +12,10 @@ var learning_rate = 0.1
 var discount_factor = 0.9
 var epsilon = 0.2
 
+# Variables for random action
+var ally_random = false
+var enemy_random = true
+
 # Variables for tracking state and actions
 var ally_health
 var enemy_health
@@ -38,13 +42,10 @@ const REWARD_TYPE_PENALTY = "penalty"
 const REWARD_TYPE_REWARD = "reward"
 const REWARD_TYPE_MIXED = "mixed"
 
-# Settings for current reward type (set this based on your game settings)
 var reward_type = REWARD_TYPE_MIXED
 
 # Settings for use discrete states or continuous states
 var use_discrete_states = true
-
-# Discretization parameters
 const NUM_BINS = 5
 
 # Constants for defend action
@@ -85,7 +86,10 @@ func simulate_combat():
 				print("Ally uses a special attack for ", damage, " damage.")
 				enemy_health -= damage
 		else:
-			ally_last_action = choose_action(ally_last_state, "ally")
+			if ally_random == true:
+				ally_last_action = choose_random_action()
+			else:
+				ally_last_action = choose_action(ally_last_state, "ally")
 			match ally_last_action:
 				"Attack":
 					var damage = calculate_attack_damage(5, 10)  # Example damage range
@@ -124,7 +128,10 @@ func simulate_combat():
 				print("Enemy uses a special attack for ", damage, " damage.")
 				ally_health -= damage
 		else:
-			enemy_last_action = choose_action(enemy_last_state, "enemy")
+			if enemy_random == true:
+				enemy_last_action = choose_random_action()
+			else:
+				enemy_last_action = choose_action(enemy_last_state, "enemy")
 			match enemy_last_action:
 				"Attack":
 					var damage = calculate_attack_damage(5, 10)  # Example damage range
@@ -232,6 +239,9 @@ func choose_action(state, table_type):
 			return max_action  # Best action (exploitation)
 		else:
 			return actions[randi() % actions.size()]  # Random action if state not in Q-table
+
+func choose_random_action():
+	return actions[randi() % actions.size()]
 
 # Function to calculate attack damage
 func calculate_attack_damage(min_damage, max_damage):
