@@ -236,6 +236,7 @@ func enemy_turn(character):
 			var damage = calculate_attack_damage(character.enemy_data.min_damage, character.enemy_data.max_damage)*2.5
 			var end_damage = int(round(damage))
 			target.take_damage(end_damage, character.name, target.name)
+			character.attack()
 		else:
 			enemy_last_action = choose_action(enemy_last_state, "enemy")  # Choose action based on Q-table
 			match enemy_last_action:
@@ -243,10 +244,13 @@ func enemy_turn(character):
 					var target = choose_random_ally()
 					var damage = calculate_attack_damage(character.enemy_data.min_damage, character.enemy_data.max_damage)
 					target.take_damage(damage, character.name, target.name)
+					character.attack()
 				"Defend":
+					#character.defend()
 					display_text(character.name + " prepares to defend!")
 					character.is_defending = true
 				"Special":
+					#character.preparespecial()
 					display_text(character.name + " prepares a strong attack!")
 					character.is_special = true
 		
@@ -276,6 +280,7 @@ func ally_turn(character):
 			var damage = calculate_attack_damage(State.Ally_min_damage, State.Ally_max_damage)*2.5
 			var end_damage = int(round(damage))
 			EnemyGroup.ally_attack(target_enemy, end_damage)
+			character.attack()
 		else:
 			ally_last_action = choose_action(ally_last_state, "ally")  # Choose action based on Q-table
 			match ally_last_action:
@@ -283,10 +288,13 @@ func ally_turn(character):
 					var target_enemy = choose_random_enemy()
 					var damage = calculate_attack_damage(State.Ally_min_damage, State.Ally_max_damage)
 					EnemyGroup.ally_attack(target_enemy, damage)
+					character.attack()
 				"Defend":
+					#character.defend()
 					display_text("Ally prepares to defend!")
 					character.is_defending = true
 				"Special":
+					#character.preparespecial()
 					display_text("Ally prepares an ability!")
 					character.is_special = true
 					#Check for print q table here
@@ -313,6 +321,7 @@ func player_turn(character):
 				var damage = calculate_attack_damage(State.Ally_min_damage, State.Ally_max_damage)*2.5
 				var end_damage = int(round(damage))
 				EnemyGroup.player_attack(end_damage)
+				character.attack()
 				await Textbox_closed
 				emit_signal("Turn_completed")
 		else:
@@ -539,6 +548,7 @@ func _on_attack_pressed():
 	#display_text("You attack enemy, dealing %d damage!" % [State.Player_damage])
 	if EnemyGroup and EnemyGroup.has_method("player_attack"):
 		EnemyGroup.player_attack(calculate_attack_damage(State.Player_min_damage, State.Player_max_damage))
+		PlayerGroup.get_child(0).attack()
 	ActionPanel.hide()
 	EnemyGroup.hide_focus(EnemyGroup.focused_enemy)
 	await Textbox_closed
@@ -547,6 +557,7 @@ func _on_attack_pressed():
 
 func _on_special_pressed():
 	ActionPanel.hide()
+	#PlayerGroup.get_child(0).preparespecial()
 	display_text("You prepare to do a strong attack!")
 	await Textbox_closed
 	PlayerGroup.get_child(0).is_special = true
@@ -556,6 +567,7 @@ func _on_special_pressed():
 func _on_defend_pressed():
 	ActionPanel.hide()
 	EnemyGroup.hide_focus(EnemyGroup.focused_enemy)
+	#PlayerGroup.get_child(0).defend()
 	display_text("You prepare to defend!")
 	await Textbox_closed
 	PlayerGroup.get_child(0).is_defending = true

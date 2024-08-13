@@ -3,6 +3,7 @@ extends CharacterBody2D
 @onready var anim = $AnimationPlayer
 @onready var animTree = $AnimationTree
 @onready var hitbox = $PlayerHitbox
+@onready var playerWalkingAudioStream = $AudioStreamPlayer_Walking
 
 @export var speed: int = 50
 
@@ -34,11 +35,15 @@ func move_player():
 
 	if input_vector == Vector2.ZERO:
 		$AnimationTree.get("parameters/playback").travel("Idle")
+		playerWalkingAudioStream.stop()
 	else:
 		$AnimationTree.get("parameters/playback").travel("Run")
 		$AnimationTree.set("parameters/Idle/blend_position", input_vector)
 		$AnimationTree.set("parameters/Run/blend_position", input_vector)
 		$AnimationTree.set("parameters/Stab_Attack/blend_position", input_vector)
+		
+		if !playerWalkingAudioStream.playing:
+			playerWalkingAudioStream.play()
 
 	move_and_slide()
 

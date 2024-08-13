@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://db422jelyg32"
+path="res://.godot/imported/Spider's Grotto.ogg-edfc3ac1565b10005f12a15810edddf7.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Audio/Music/Spider's Grotto.ogg"
+dest_files=["res://.godot/imported/Spider's Grotto.ogg-edfc3ac1565b10005f12a15810edddf7.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

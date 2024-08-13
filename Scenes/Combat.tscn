@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bwrpldnxp84nb"]
+[gd_scene load_steps=18 format=3 uid="uid://bwrpldnxp84nb"]
 
 [ext_resource type="Texture2D" uid="uid://dt8xhrg4pf8qa" path="res://Assets/Background/battleback1.png" id="1_34wcb"]
 [ext_resource type="Script" path="res://Scenes/Combat.gd" id="1_75bnx"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://b8d61i6pytcal" path="res://Entities/Resources/Guard.tres" id="2_ky36b"]
 [ext_resource type="Texture2D" uid="uid://ddupqweb3gluf" path="res://Assets/GUI/GUI.png" id="2_lmv22"]
 [ext_resource type="Script" path="res://Scripts/Simulation.gd" id="3_ixcmd"]
+[ext_resource type="AudioStream" uid="uid://cswnh5ip0abpu" path="res://Assets/Audio/Music/If It's a Fight You Want.ogg" id="3_qpoa6"]
 [ext_resource type="FontFile" uid="uid://c071gd4te30u" path="res://Assets/Fonts/Adventurer.ttf" id="4_o2niq"]
 [ext_resource type="PackedScene" uid="uid://cyc77rky143pc" path="res://Entities/Scenes/EnemyGroup.tscn" id="5_bfbqa"]
 [ext_resource type="PackedScene" uid="uid://boc1jny6kq7di" path="res://Entities/Scenes/PlayerGroup.tscn" id="5_ere8x"]
@@ -102,6 +103,11 @@ border_color = Color(1, 1, 1, 1)
 [node name="Combat" type="Node2D"]
 script = ExtResource("1_75bnx")
 Enemies = Array[Resource]([ExtResource("2_ky36b"), ExtResource("2_ky36b")])
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_qpoa6")
+autoplay = true
+bus = &"Music"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true

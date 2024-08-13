@@ -67,7 +67,7 @@ func attack():
 	if is_alive == true:
 		is_attacking = true
 		# Trigger attack animation
-		$AnimationTree.get("parameters/playback").travel("Stab_Left")
+		$AnimationTree.get("parameters/playback").travel("Stab_Right")
 
 func finish_attack():
 	is_attacking = false

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bimf8kkvw1wwv"
+path="res://.godot/imported/Altered Paths.ogg-78ae930c7b612bdbb4c03d6eccd1eb32.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Audio/Music/Altered Paths.ogg"
+dest_files=["res://.godot/imported/Altered Paths.ogg-78ae930c7b612bdbb4c03d6eccd1eb32.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

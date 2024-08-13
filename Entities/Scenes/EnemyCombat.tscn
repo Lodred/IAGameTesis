@@ -791,7 +791,6 @@ tracks/7/keys = {
 [sub_resource type="Animation" id="Animation_w08ma"]
 resource_name = "Stab_Right"
 length = 0.4
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1097,7 +1096,6 @@ frame = 51
 texture = ExtResource("3_0dmpa")
 
 [node name="Item" type="Sprite2D" parent="Sprite"]
-visible = false
 z_index = 1
 position = Vector2(6, 1)
 scale = Vector2(-1, 1)

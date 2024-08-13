@@ -720,7 +720,6 @@ tracks/7/keys = {
 [sub_resource type="Animation" id="Animation_igmm4"]
 resource_name = "Stab_Left"
 length = 0.4
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1127,9 +1126,8 @@ frame = 4
 texture = ExtResource("3_x5vri")
 
 [node name="Item" type="Sprite2D" parent="Sprite"]
-visible = false
 z_index = 1
-position = Vector2(-6, 2)
+position = Vector2(-6, 1)
 texture = ExtResource("4_jhq13")
 
 [node name="Focus" type="Sprite2D" parent="."]

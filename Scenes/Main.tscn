@@ -1,7 +1,8 @@
-[gd_scene load_steps=34 format=3 uid="uid://d1uwpn8tp0npm"]
+[gd_scene load_steps=35 format=3 uid="uid://d1uwpn8tp0npm"]
 
 [ext_resource type="Script" path="res://Scenes/Main.gd" id="1_blxan"]
 [ext_resource type="Texture2D" uid="uid://dj4nqgvq5jik0" path="res://Assets/Forest_Tileset/Forest Tilesett.png" id="1_w2j2d"]
+[ext_resource type="AudioStream" uid="uid://cmg2j6g4hwe11" path="res://Assets/Audio/Music/Long Road Ahead.ogg" id="2_cpe6r"]
 [ext_resource type="Texture2D" uid="uid://ch0orh5vvo6q3" path="res://Assets/Forest_Tileset/Forest Cliff.png" id="2_g6dax"]
 [ext_resource type="Texture2D" uid="uid://c3xro6qen7ltu" path="res://Assets/Forest_Tileset/Ground Tileset.png" id="3_nl6tj"]
 [ext_resource type="Texture2D" uid="uid://c74j0235b257s" path="res://Assets/Forest_Tileset/Forest Props.png" id="3_u26pk"]
@@ -10198,6 +10199,11 @@ gradient = SubResource("Gradient_cu310")
 [node name="World" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_blxan")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_cpe6r")
+autoplay = true
+bus = &"Music"
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
