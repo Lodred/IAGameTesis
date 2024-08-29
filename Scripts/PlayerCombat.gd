@@ -9,6 +9,7 @@ extends CharacterBody2D
 @onready var kill_sound = $AudioStreamPlayer_Kill
 @onready var defend_sound = $AudioStreamPlayer_Defend
 @onready var special_sound = $AudioStreamPlayer_Special
+@onready var run_sound = $AudioStreamPlayer_Run
 
 var combat_node
 

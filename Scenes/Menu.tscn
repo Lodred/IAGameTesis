@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cg60hfkrsqlwx"]
+[gd_scene load_steps=12 format=3 uid="uid://cg60hfkrsqlwx"]
 
 [ext_resource type="Script" path="res://Scripts/Menu.gd" id="1_1cmo4"]
 [ext_resource type="Texture2D" uid="uid://01nxjt5ju0dj" path="res://Assets/Background/MainMenu.png" id="1_pgxi5"]
 [ext_resource type="FontFile" uid="uid://c071gd4te30u" path="res://Assets/Fonts/Adventurer.ttf" id="2_s8rv7"]
 [ext_resource type="FontFile" uid="uid://b7givhsythdfv" path="res://Assets/Fonts/NESCyrillic.ttf" id="3_xixey"]
+[ext_resource type="PackedScene" uid="uid://xncvmm51esu1" path="res://Scenes/Button_plus.tscn" id="4_3626f"]
+[ext_resource type="AudioStream" uid="uid://cmge5bil45x6g" path="res://Assets/Audio/Music/xDeviruchi - Title Theme .wav" id="5_cy422"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6b3vc"]
 bg_color = Color(0.2, 0.160784, 0.160784, 0.705882)
@@ -107,7 +109,7 @@ theme_override_constants/margin_bottom = 12
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2
 offset_left = 147.0
-offset_top = 260.0
+offset_top = 213.0
 offset_right = 421.0
 offset_bottom = 574.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_6b3vc")
@@ -148,11 +150,10 @@ size_flags_vertical = 4
 theme_override_constants/separation = 20
 metadata/_edit_lock_ = true
 
-[node name="Start" type="Button" parent="Panel/HBoxContainer/VBoxContainer"]
+[node name="Start" parent="Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
 theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
 theme_override_fonts/font = ExtResource("3_xixey")
@@ -163,11 +164,10 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
 theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
 text = "Start Game"
 
-[node name="Settings" type="Button" parent="Panel/HBoxContainer/VBoxContainer"]
+[node name="Simulation" parent="Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
 theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
 theme_override_fonts/font = ExtResource("3_xixey")
@@ -176,13 +176,12 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
 theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
 theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
-text = "Settings"
+text = "Simulate"
 
-[node name="Exit" type="Button" parent="Panel/HBoxContainer/VBoxContainer"]
+[node name="Settings" parent="Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
 theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
 theme_override_fonts/font = ExtResource("3_xixey")
@@ -191,8 +190,35 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
 theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
 theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
-text = "Exit Game"
+text = "Settings
+"
+
+[node name="Exit" parent="Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("3_xixey")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
+text = "Exit Game
+"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_cy422")
+autoplay = true
+bus = &"Music"
+
+[node name="AudioStreamPlayer2D_SFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_cy422")
+autoplay = true
+bus = &"Music"
 
 [connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/Simulation" to="." method="_on_simulation_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

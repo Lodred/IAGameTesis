@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bwrpldnxp84nb"]
+[gd_scene load_steps=24 format=3 uid="uid://bwrpldnxp84nb"]
 
 [ext_resource type="Texture2D" uid="uid://dt8xhrg4pf8qa" path="res://Assets/Background/battleback1.png" id="1_34wcb"]
 [ext_resource type="Script" path="res://Scenes/Combat.gd" id="1_75bnx"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://boc1jny6kq7di" path="res://Entities/Scenes/PlayerGroup.tscn" id="5_ere8x"]
 [ext_resource type="Texture2D" uid="uid://dq5nmld8ceu05" path="res://Assets/Background/Tutorial2.png" id="5_l7e3f"]
 [ext_resource type="Script" path="res://Addons/label_font_auto_sizer/label_auto_sizer.gd" id="9_o1nd3"]
+[ext_resource type="PackedScene" uid="uid://jd2ooy8r3ham" path="res://Scenes/Button_combat.tscn" id="12_cahqt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xpkih"]
 bg_color = Color(0, 0, 0, 1)
@@ -134,7 +135,7 @@ bus = &"Music"
 
 [node name="AudioStreamPlayer_Click" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_l1w8d")
-bus = &"SFX"
+bus = &"UI"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
@@ -385,7 +386,7 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Attack" type="Button" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelUp"]
+[node name="Attack" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelUp" instance=ExtResource("12_cahqt")]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -398,7 +399,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_055kq")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_x4i1e")
 text = "Attack"
 
-[node name="Defend" type="Button" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelUp"]
+[node name="Defend" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelUp" instance=ExtResource("12_cahqt")]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -415,7 +416,7 @@ text = "Defend"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Special" type="Button" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown"]
+[node name="Special" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown" instance=ExtResource("12_cahqt")]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -428,7 +429,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_055kq")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_x4i1e")
 text = "Special"
 
-[node name="Run" type="Button" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown"]
+[node name="Run" parent="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown" instance=ExtResource("12_cahqt")]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)

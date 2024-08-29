@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://bet31v175scx6"]
+[gd_scene load_steps=44 format=3 uid="uid://bet31v175scx6"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerCombat.gd" id="1_bqehd"]
 [ext_resource type="Texture2D" uid="uid://1l2wukecxxx2" path="res://Assets/Sprites/Skeleton.png" id="2_bhxgx"]
@@ -10,7 +10,8 @@
 [ext_resource type="AudioStream" uid="uid://c5a2gwjohrjno" path="res://Assets/Audio/SFX/Kill.wav" id="8_c7i06"]
 [ext_resource type="AudioStream" uid="uid://c3s0i7476f38g" path="res://Assets/Audio/SFX/HitBlock.wav" id="9_x6q87"]
 [ext_resource type="AudioStream" uid="uid://dwxjrbvn8114c" path="res://Assets/Audio/SFX/Defend.wav" id="10_jxaxb"]
-[ext_resource type="AudioStream" uid="uid://bqndhg8alcrsh" path="res://Assets/Audio/SFX/PowerUp.wav" id="11_qc2jf"]
+[ext_resource type="AudioStream" uid="uid://bqndhg8alcrsh" path="res://Assets/Audio/SFX/PowerUp.wav" id="11_vdo5t"]
+[ext_resource type="AudioStream" uid="uid://cexq0mep8s00m" path="res://Assets/Audio/SFX/Escape.wav" id="12_r6t10"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qv21b"]
 light_mode = 1
@@ -1203,5 +1204,9 @@ stream = ExtResource("10_jxaxb")
 bus = &"SFX"
 
 [node name="AudioStreamPlayer_Special" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("11_qc2jf")
+stream = ExtResource("11_vdo5t")
+bus = &"SFX"
+
+[node name="AudioStreamPlayer_Run" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_r6t10")
 bus = &"SFX"

@@ -605,6 +605,9 @@ func _on_defend_pressed():
 
 func _on_run_pressed():
 	running = true
+	ActionPanel.hide()
+	EnemyGroup.hide_focus(EnemyGroup.focused_enemy)
+	PlayerGroup.get_child(0).run_sound.play()
 	display_text("Got away safely!")
 	await Textbox_closed
 	await get_tree().create_timer(0.8).timeout

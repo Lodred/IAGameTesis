@@ -10,7 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://bpnt2dxsbp4ch" path="res://Assets/Audio/SFX/Hit.wav" id="8_2ep6u"]
 [ext_resource type="AudioStream" uid="uid://c3s0i7476f38g" path="res://Assets/Audio/SFX/HitBlock.wav" id="9_gxcvg"]
 [ext_resource type="AudioStream" uid="uid://dwxjrbvn8114c" path="res://Assets/Audio/SFX/Defend.wav" id="10_1ypig"]
-[ext_resource type="AudioStream" uid="uid://bqndhg8alcrsh" path="res://Assets/Audio/SFX/PowerUp.wav" id="11_6xsja"]
+[ext_resource type="AudioStream" uid="uid://bqndhg8alcrsh" path="res://Assets/Audio/SFX/PowerUp.wav" id="11_xnfmk"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6cdqx"]
 light_mode = 1
@@ -1173,5 +1173,5 @@ stream = ExtResource("10_1ypig")
 bus = &"SFX"
 
 [node name="AudioStreamPlayer_Special" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("11_6xsja")
+stream = ExtResource("11_xnfmk")
 bus = &"SFX"
