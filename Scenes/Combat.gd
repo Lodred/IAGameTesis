@@ -13,6 +13,8 @@ signal Turn_completed
 @onready var EnemyGroup = $CanvasLayer/Control/EnemyPos/EnemyGroup
 @onready var PlayerGroup = $CanvasLayer/Control/PlayerPos/PlayerGroup
 @onready var Controller = $CanvasLayer/Control
+@onready var Tutorial = $CanvasLayer/Control/TutorialBox
+@onready var Click_sound = $AudioStreamPlayer_Click
 
 const BaseEnemy = preload("res://Entities/BaseEnemy.gd")
 @export var Enemies: Array[Resource] = []
@@ -79,6 +81,9 @@ func _ready():
 	set_health(PlayerHealth, State.Player_current_health, State.Player_max_health)
 	set_health(AllyHealth, State.Ally_current_health, State.Ally_max_health)
 	
+	if State.Tutorial_Combat == false:
+		Tutorial.set_visible(false)
+	
 	Textbox.hide()
 	ActionPanel.hide()
 	
@@ -138,22 +143,33 @@ func CharacterSort(a, b):
 	return a.speed > b.speed
 
 func get_next_turn():
-	if turn_queue.size() > 0:
-		return turn_queue[0]
-	return null
+	if battleover == false:
+		if turn_queue.size() > 0:
+			return turn_queue[0]
+		return null
 
 #Remove from turn if dead
 func handle_turns():
 	while battleover == false:
 		while turn_queue.size() > 0:
+			# Check if the battle is over after the action
+			if battleover:
+				break
+				
 			var current_character = turn_queue.pop_front()
 			
+			# Skip the turn if the character is dead
+			if not current_character.is_alive:
+				continue
+				
 			# Perform the character's action (implement this based on your game logic)
 			perform_action(current_character)
 			await Turn_completed
 			
-			# Add character back to the turn queue
-			add_to_turn_queue(current_character)
+			# Add character back to the turn queue if they're still alive
+			if current_character.is_alive:
+				add_to_turn_queue(current_character)
+				
 
 func remove_from_turn_queue(value):
 	for character in turn_queue:
@@ -182,9 +198,9 @@ func win_battle():
 	update_q_table(enemy_last_state, enemy_last_action, current_state, enemy_final_reward, "enemy")
 	ally_accumulated_reward += ally_final_reward
 	enemy_accumulated_reward += enemy_final_reward
-	save_q_tables()
+	#save_q_tables()
 	display_text("All enemies have been slain!")
-	print(q_table_ally)
+	#print(q_table_ally)
 	await Textbox_closed
 	await get_tree().create_timer(0.8).timeout
 	get_tree().change_scene_to_file("res://Scenes/Main.tscn")
@@ -203,7 +219,7 @@ func lose_battle():
 	update_q_table(enemy_last_state, enemy_last_action, current_state, enemy_final_reward, "enemy")
 	ally_accumulated_reward += ally_final_reward
 	enemy_accumulated_reward += enemy_final_reward
-	save_q_tables()
+	#save_q_tables()
 	display_text("All allies have been defeated!")
 	await Textbox_closed
 	await get_tree().create_timer(0.8).timeout
@@ -211,10 +227,16 @@ func lose_battle():
 	get_tree().quit()
 
 func _input(event):
-	if (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)) and Textbox.visible:
-		Textbox.hide()
-		await get_tree().create_timer(0.1).timeout
-		emit_signal("Textbox_closed")
+	if (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)) and State.Tutorial_Combat:
+		Click_sound.play()
+		State.Tutorial_Combat = false
+		Tutorial.set_visible(false)
+	else:
+		if (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)) and Textbox.visible:
+			Click_sound.play()
+			Textbox.hide()
+			await get_tree().create_timer(0.1).timeout
+			emit_signal("Textbox_closed")
 
 func calculate_attack_damage(min_damage, max_damage) -> int:
 	return randi_range(min_damage, max_damage)
@@ -249,10 +271,12 @@ func enemy_turn(character):
 					#character.defend()
 					display_text(character.name + " prepares to defend!")
 					character.is_defending = true
+					character.defend_sound.play()
 				"Special":
 					#character.preparespecial()
 					display_text(character.name + " prepares a strong attack!")
 					character.is_special = true
+					character.special_sound.play()
 		
 		# Update Q-table
 		current_state = get_combat_state()  # Update the state after action
@@ -293,13 +317,14 @@ func ally_turn(character):
 					#character.defend()
 					display_text("Ally prepares to defend!")
 					character.is_defending = true
+					character.defend_sound.play()
 				"Special":
 					#character.preparespecial()
 					display_text("Ally prepares an ability!")
 					character.is_special = true
-					#Check for print q table here
+					character.special_sound.play()
 		
-		print(q_table_ally)
+		#print(q_table_ally)
 		
 		# Update Q-table
 		current_state = get_combat_state()  # Update the state after action
@@ -540,9 +565,10 @@ func choose_random_ally():
 			return PlayerGroup.get_child(0)  # Player is at index 0 in PlayerGroup
 
 func choose_random_enemy():
-	var enemies = EnemyGroup.enemies
-	var random_index = randi() % enemies.size()
-	return random_index
+	if battleover == false:
+		var enemies = EnemyGroup.enemies
+		var random_index = randi() % enemies.size()
+		return random_index
 
 func _on_attack_pressed():
 	#display_text("You attack enemy, dealing %d damage!" % [State.Player_damage])
@@ -558,9 +584,10 @@ func _on_attack_pressed():
 func _on_special_pressed():
 	ActionPanel.hide()
 	#PlayerGroup.get_child(0).preparespecial()
+	PlayerGroup.get_child(0).is_special = true
+	PlayerGroup.get_child(0).special_sound.play()
 	display_text("You prepare to do a strong attack!")
 	await Textbox_closed
-	PlayerGroup.get_child(0).is_special = true
 	emit_signal("Turn_completed")
 
 
@@ -568,9 +595,10 @@ func _on_defend_pressed():
 	ActionPanel.hide()
 	EnemyGroup.hide_focus(EnemyGroup.focused_enemy)
 	#PlayerGroup.get_child(0).defend()
+	PlayerGroup.get_child(0).is_defending = true
+	PlayerGroup.get_child(0).defend_sound.play()
 	display_text("You prepare to defend!")
 	await Textbox_closed
-	PlayerGroup.get_child(0).is_defending = true
 	emit_signal("Turn_completed")
 	#End Turn
 	pass # Replace with function body.

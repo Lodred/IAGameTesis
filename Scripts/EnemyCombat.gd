@@ -4,6 +4,11 @@ extends CharacterBody2D
 @onready var animTree = $AnimationTree
 @onready var _focus = $Focus
 @onready var progress_bar = $ProgressBar
+@onready var hit_sound = $AudioStreamPlayer_Hit
+@onready var hitBlock_sound = $AudioStreamPlayer_HitBlock
+@onready var kill_sound = $AudioStreamPlayer_Kill
+@onready var defend_sound = $AudioStreamPlayer_Defend
+@onready var special_sound = $AudioStreamPlayer_Special
 
 @export var enemy_name = "Enemy"
 @export var max_health = 10

@@ -3,6 +3,9 @@ extends Node
 var player_position = Vector2(136, -314)
 var enemy_to_remove_id = []
 
+var Tutorial_Main = true
+var Tutorial_Combat = true
+
 var Player_alive = true
 var Player_max_health = 80
 var Player_current_health = 80

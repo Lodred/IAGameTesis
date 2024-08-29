@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://bus4ry2utjobc"]
+[gd_scene load_steps=44 format=3 uid="uid://bus4ry2utjobc"]
 
 [ext_resource type="Script" path="res://Scripts/EnemyCombat.gd" id="1_lt1pe"]
 [ext_resource type="Texture2D" uid="uid://bjewi73nvwyo6" path="res://Assets/Sprites/Human3.png" id="2_r3kov"]
@@ -6,6 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://cuu18qfxcgj1y" path="res://Assets/Sprites/Sword.png" id="4_vkbly"]
 [ext_resource type="Texture2D" uid="uid://crqgse61gt5kg" path="res://Assets/Sprites/hand_cursor0000.png" id="5_cbeuq"]
 [ext_resource type="FontFile" uid="uid://b7givhsythdfv" path="res://Assets/Fonts/NESCyrillic.ttf" id="6_epgwh"]
+[ext_resource type="AudioStream" uid="uid://c5a2gwjohrjno" path="res://Assets/Audio/SFX/Kill.wav" id="8_0r0k0"]
+[ext_resource type="AudioStream" uid="uid://bpnt2dxsbp4ch" path="res://Assets/Audio/SFX/Hit.wav" id="8_2ep6u"]
+[ext_resource type="AudioStream" uid="uid://c3s0i7476f38g" path="res://Assets/Audio/SFX/HitBlock.wav" id="9_gxcvg"]
+[ext_resource type="AudioStream" uid="uid://dwxjrbvn8114c" path="res://Assets/Audio/SFX/Defend.wav" id="10_1ypig"]
+[ext_resource type="AudioStream" uid="uid://bqndhg8alcrsh" path="res://Assets/Audio/SFX/PowerUp.wav" id="11_6xsja"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6cdqx"]
 light_mode = 1
@@ -1150,3 +1155,23 @@ theme_override_font_sizes/font_size = 17
 text = "HP: 30/30"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AudioStreamPlayer_Hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_2ep6u")
+bus = &"SFX"
+
+[node name="AudioStreamPlayer_Kill" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_0r0k0")
+bus = &"SFX"
+
+[node name="AudioStreamPlayer_HitBlock" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_gxcvg")
+bus = &"SFX"
+
+[node name="AudioStreamPlayer_Defend" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_1ypig")
+bus = &"SFX"
+
+[node name="AudioStreamPlayer_Special" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_6xsja")
+bus = &"SFX"

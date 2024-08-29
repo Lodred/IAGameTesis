@@ -4,6 +4,11 @@ extends CharacterBody2D
 @onready var animTree = $AnimationTree
 @onready var _focus = $Focus
 @onready var progress_bar = $ProgressBar
+@onready var hit_sound = $AudioStreamPlayer_Hit
+@onready var hitBlock_sound = $AudioStreamPlayer_HitBlock
+@onready var kill_sound = $AudioStreamPlayer_Kill
+@onready var defend_sound = $AudioStreamPlayer_Defend
+@onready var special_sound = $AudioStreamPlayer_Special
 
 var combat_node
 
@@ -85,6 +90,7 @@ func take_damage(damage, attacker_name, target_name):
 			var end_damage = int(round(damage-2))
 			if State.Ally_current_health - end_damage <= 0:
 				combat_node.display_text("Ally was defeated!")
+				kill_sound.play()
 				die()
 				State.Ally_current_health = 0
 				combat_node.set_health(combat_node.AllyHealth, State.Ally_current_health, State.AllyHealth_max_health)
@@ -93,10 +99,12 @@ func take_damage(damage, attacker_name, target_name):
 			else:
 				State.Ally_current_health = State.Ally_current_health - end_damage
 				combat_node.set_health(combat_node.AllyHealth, State.Ally_current_health, State.Ally_max_health)
-				combat_node.display_text(target_name + " defended and took " + str(end_damage) + " damage!")
+				hitBlock_sound.play()
 				_gethurt()
+				combat_node.display_text(target_name + " defended and took " + str(end_damage) + " damage!")
 		else:
 			combat_node.display_text("Ally was defeated!")
+			kill_sound.play()
 			die()
 			State.Ally_current_health = 0
 			combat_node.set_health(combat_node.AllyHealth, State.Ally_current_health, State.Ally_max_health)
@@ -109,10 +117,12 @@ func take_damage(damage, attacker_name, target_name):
 			await combat_node.Textbox_closed
 			State.Ally_current_health = State.Ally_current_health - end_damage
 			combat_node.set_health(combat_node.AllyHealth, State.Ally_current_health, State.Ally_max_health)
-			combat_node.display_text(target_name + " defended and took " + str(end_damage) + " damage!")
+			hitBlock_sound.play()
 			_gethurt()
+			combat_node.display_text(target_name + " defended and took " + str(end_damage) + " damage!")
 		else:
 			State.Ally_current_health = State.Ally_current_health - damage
 			combat_node.set_health(combat_node.AllyHealth, State.Ally_current_health, State.Ally_max_health)
-			combat_node.display_text(attacker_name + " attacks " + target_name + " for " + str(damage) + " damage!")
+			hit_sound.play()
 			_gethurt()
+			combat_node.display_text(attacker_name + " attacks " + target_name + " for " + str(damage) + " damage!")

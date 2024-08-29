@@ -85,15 +85,19 @@ func player_attack(value):
 	if enemies.size() > 0:
 		#If the enemy will be killed, kill enemy and remove from array
 		if enemies[focused_enemy] and enemies[focused_enemy].current_health - value <= 0:
-			combat_node.display_text("You attack " + enemies[focused_enemy].enemy_name + " for " + str(value) + " damage!")
-			await combat_node.Textbox_closed
+			#combat_node.display_text("You attack " + enemies[focused_enemy].enemy_name + " for " + str(value) + " damage!")
+			#await combat_node.Textbox_closed
 			#If enemy is defending, check if survive
 			if enemies[focused_enemy].is_defending == true:
 				var end_damage = int(round(value-2))
 				#Even then he dies
+				enemies[focused_enemy].kill_sound.play()
 				if enemies[focused_enemy] and enemies[focused_enemy].current_health - value <= 0:
-					combat_node.display_text(enemies[focused_enemy].enemy_name+ " was defeated!")
 					enemies[focused_enemy].take_damage(value)
+					combat_node.display_text("You attack " + enemies[focused_enemy].enemy_name + " for " + str(value) + " damage!")
+					await combat_node.Textbox_closed
+					combat_node.display_text(enemies[focused_enemy].enemy_name+ " was defeated!")
+					await combat_node.Textbox_closed
 					remove_turn(enemies[focused_enemy].name)
 					enemies.remove_at(focused_enemy)
 					focused_enemy = 0
@@ -101,15 +105,24 @@ func player_attack(value):
 					if enemies.size() <= 0:
 						enemies_left = false
 						if combat_node and combat_node.has_method("win_battle"):
+							combat_node.battleover = true
 							combat_node.win_battle()
 				#He don't die but takes damage
 				else:
-					combat_node.display_text(enemies[focused_enemy].enemy_name + " defended and took " + str(end_damage) + " damage!")
+					combat_node.display_text("You attack " + enemies[focused_enemy].enemy_name + " for " + str(value) + " damage!")
+					await combat_node.Textbox_closed
+					enemies[focused_enemy].hitBlock_sound.play()
 					enemies[focused_enemy].take_damage(end_damage)
+					combat_node.display_text(enemies[focused_enemy].enemy_name + " defended and took " + str(end_damage) + " damage!")
+					await combat_node.Textbox_closed
 			#If not he dies
 			else:
-				combat_node.display_text(enemies[focused_enemy].enemy_name+ " was defeated!")
 				enemies[focused_enemy].take_damage(value)
+				enemies[focused_enemy].kill_sound.play()
+				combat_node.display_text("You attack " + enemies[focused_enemy].enemy_name + " for " + str(value) + " damage!")
+				await combat_node.Textbox_closed
+				combat_node.display_text(enemies[focused_enemy].enemy_name+ " was defeated!")
+				await combat_node.Textbox_closed
 				remove_turn(enemies[focused_enemy].name)
 				enemies.remove_at(focused_enemy)
 				focused_enemy = 0
@@ -117,33 +130,43 @@ func player_attack(value):
 				if enemies.size() <= 0:
 					enemies_left = false
 					if combat_node and combat_node.has_method("win_battle"):
+						combat_node.battleover = true
 						combat_node.win_battle()
 		#If the enemy will not be killed, the enemy takes damage
 		elif enemies[focused_enemy] and enemies[focused_enemy].has_method("take_damage") and enemies[focused_enemy].is_alive == true:
-			combat_node.display_text("You attack " + enemies[focused_enemy].enemy_name + " for " + str(value) + " damage!")
-			await combat_node.Textbox_closed
 			#If he's defending he takes less damage
 			if enemies[focused_enemy].is_defending == true:
 				var end_damage = int(round(value-2))
-				combat_node.display_text(enemies[focused_enemy].enemy_name + " defended and took " + str(end_damage) + " damage!")
+				combat_node.display_text("You attack " + enemies[focused_enemy].enemy_name + " for " + str(value) + " damage!")
+				await combat_node.Textbox_closed
+				enemies[focused_enemy].hitBlock_sound.play()
 				enemies[focused_enemy].take_damage(end_damage)
+				combat_node.display_text(enemies[focused_enemy].enemy_name + " defended and took " + str(end_damage) + " damage!")
+				await combat_node.Textbox_closed
 			#If not full damage
 			else:
+				enemies[focused_enemy].hit_sound.play()
 				enemies[focused_enemy].take_damage(value)
+				combat_node.display_text("You attack " + enemies[focused_enemy].enemy_name + " for " + str(value) + " damage!")
+				await combat_node.Textbox_closed
 
 func ally_attack(target_enemy, value):
 	if enemies.size() > 0:
 		#If the enemy will be killed, kill enemy and remove from array
 		if enemies[target_enemy] and enemies[target_enemy].current_health - value <= 0:
-			combat_node.display_text("Witch attacks " + enemies[target_enemy].enemy_name+ ", for %d damage!" % [value])
-			await combat_node.Textbox_closed
+			#combat_node.display_text("Witch attacks " + enemies[target_enemy].enemy_name+ ", for %d damage!" % [value])
+			#await combat_node.Textbox_closed
 			#If enemy is defending, check if survive
 			if enemies[target_enemy].is_defending == true:
 				var end_damage = int(round(value-2))
 				#Even then he dies
 				if enemies[target_enemy] and enemies[target_enemy].current_health - value <= 0:
-					combat_node.display_text(enemies[target_enemy].enemy_name+ " was defeated!")
 					enemies[target_enemy].take_damage(value)
+					enemies[target_enemy].kill_sound.play()
+					combat_node.display_text("Witch attacks " + enemies[target_enemy].enemy_name+ ", for %d damage!" % [value])
+					await combat_node.Textbox_closed
+					combat_node.display_text(enemies[target_enemy].enemy_name+ " was defeated!")
+					await combat_node.Textbox_closed
 					remove_turn(enemies[target_enemy].name)
 					enemies.remove_at(target_enemy)
 					focused_enemy = 0
@@ -151,15 +174,24 @@ func ally_attack(target_enemy, value):
 					if enemies.size() <= 0:
 						enemies_left = false
 						if combat_node and combat_node.has_method("win_battle"):
+							combat_node.battleover = true
 							combat_node.win_battle()
 				#He don't die but takes damage
 				else:
-					combat_node.display_text(enemies[target_enemy].enemy_name + " defended and took " + str(end_damage) + " damage!")
+					combat_node.display_text("You attack " + enemies[focused_enemy].enemy_name + " for " + str(value) + " damage!")
+					await combat_node.Textbox_closed
+					enemies[target_enemy].hitBlock_sound.play()
 					enemies[target_enemy].take_damage(end_damage)
+					combat_node.display_text(enemies[target_enemy].enemy_name + " defended and took " + str(end_damage) + " damage!")
+					await combat_node.Textbox_closed
 			#If not he dies
 			else:
-				combat_node.display_text(enemies[target_enemy].enemy_name+ " was defeated!")
 				enemies[target_enemy].take_damage(value)
+				enemies[target_enemy].kill_sound.play()
+				combat_node.display_text("Witch attacks " + enemies[target_enemy].enemy_name+ ", for %d damage!" % [value])
+				await combat_node.Textbox_closed
+				combat_node.display_text(enemies[target_enemy].enemy_name+ " was defeated!")
+				await combat_node.Textbox_closed
 				remove_turn(enemies[target_enemy].name)
 				enemies.remove_at(target_enemy)
 				focused_enemy = 0
@@ -167,16 +199,22 @@ func ally_attack(target_enemy, value):
 				if enemies.size() <= 0:
 					enemies_left = false
 					if combat_node and combat_node.has_method("win_battle"):
+						combat_node.battleover = true
 						combat_node.win_battle()
 		#If the enemy will not be killed, the enemy takes damage
 		elif enemies[target_enemy] and enemies[target_enemy].has_method("take_damage") and enemies[target_enemy].is_alive == true:
-			combat_node.display_text("Witch attacks " + enemies[target_enemy].enemy_name+ ", dealing %d damage!" % [value])
-			await combat_node.Textbox_closed
 			#If he's defending he takes less damage
 			if enemies[target_enemy].is_defending == true:
 				var end_damage = int(round(value-2))
-				combat_node.display_text(enemies[target_enemy].enemy_name + " defended and took " + str(end_damage) + " damage!")
+				combat_node.display_text("You attack " + enemies[focused_enemy].enemy_name + " for " + str(value) + " damage!")
+				await combat_node.Textbox_closed
+				enemies[target_enemy].hitBlock_sound.play()
 				enemies[target_enemy].take_damage(end_damage)
+				combat_node.display_text(enemies[target_enemy].enemy_name + " defended and took " + str(end_damage) + " damage!")
+				await combat_node.Textbox_closed
 			#If not full damage
 			else:
+				enemies[target_enemy].hit_sound.play()
 				enemies[target_enemy].take_damage(value)
+				combat_node.display_text("Witch attacks " + enemies[target_enemy].enemy_name+ ", dealing %d damage!" % [value])
+				await combat_node.Textbox_closed

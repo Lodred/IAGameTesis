@@ -5,6 +5,9 @@ var player
 func _ready():
 	player = $Player
 	
+	if State.Tutorial_Main == false:
+		$CanvasLayer/TutorialBox.set_visible(false)
+	
 	if State.enemy_to_remove_id.size() > 0:
 		for enemy_id in State.enemy_to_remove_id:
 			remove_enemy_by_id(enemy_id)
@@ -22,3 +25,11 @@ func remove_enemy_by_id(id):
 			enemy_to_remove = child
 			child.queue_free()
 			break
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		close_tutorial()
+		
+func close_tutorial():
+	State.Tutorial_Main = false
+	$CanvasLayer/TutorialBox.set_visible(false)

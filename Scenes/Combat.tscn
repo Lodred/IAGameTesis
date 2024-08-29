@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bwrpldnxp84nb"]
+[gd_scene load_steps=23 format=3 uid="uid://bwrpldnxp84nb"]
 
 [ext_resource type="Texture2D" uid="uid://dt8xhrg4pf8qa" path="res://Assets/Background/battleback1.png" id="1_34wcb"]
 [ext_resource type="Script" path="res://Scenes/Combat.gd" id="1_75bnx"]
@@ -7,9 +7,32 @@
 [ext_resource type="Texture2D" uid="uid://ddupqweb3gluf" path="res://Assets/GUI/GUI.png" id="2_lmv22"]
 [ext_resource type="Script" path="res://Scripts/Simulation.gd" id="3_ixcmd"]
 [ext_resource type="AudioStream" uid="uid://cswnh5ip0abpu" path="res://Assets/Audio/Music/If It's a Fight You Want.ogg" id="3_qpoa6"]
+[ext_resource type="AudioStream" uid="uid://cvtuoihst4ntb" path="res://Assets/Audio/SFX/Click.wav" id="4_l1w8d"]
 [ext_resource type="FontFile" uid="uid://c071gd4te30u" path="res://Assets/Fonts/Adventurer.ttf" id="4_o2niq"]
 [ext_resource type="PackedScene" uid="uid://cyc77rky143pc" path="res://Entities/Scenes/EnemyGroup.tscn" id="5_bfbqa"]
 [ext_resource type="PackedScene" uid="uid://boc1jny6kq7di" path="res://Entities/Scenes/PlayerGroup.tscn" id="5_ere8x"]
+[ext_resource type="Texture2D" uid="uid://dq5nmld8ceu05" path="res://Assets/Background/Tutorial2.png" id="5_l7e3f"]
+[ext_resource type="Script" path="res://Addons/label_font_auto_sizer/label_auto_sizer.gd" id="9_o1nd3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xpkih"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ikgt4"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xwxnn"]
 texture = ExtResource("2_lmv22")
@@ -109,6 +132,10 @@ stream = ExtResource("3_qpoa6")
 autoplay = true
 bus = &"Music"
 
+[node name="AudioStreamPlayer_Click" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_l1w8d")
+bus = &"SFX"
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
 
@@ -122,6 +149,111 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("3_ixcmd")
+metadata/_edit_use_anchors_ = true
+
+[node name="TutorialBox" type="Panel" parent="CanvasLayer/Control"]
+z_index = 5
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -200.0
+offset_right = 250.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xpkih")
+metadata/_edit_use_anchors_ = true
+
+[node name="ImagePanel" type="Panel" parent="CanvasLayer/Control/TutorialBox"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.0525
+anchor_right = 1.0
+anchor_bottom = 0.61
+offset_left = 25.0
+offset_top = 9.0
+offset_right = -25.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ikgt4")
+metadata/_edit_use_anchors_ = true
+
+[node name="Image" type="TextureRect" parent="CanvasLayer/Control/TutorialBox/ImagePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_l7e3f")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/TutorialBox"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.017
+anchor_top = 0.02
+anchor_right = 0.983
+anchor_bottom = 0.075
+offset_left = -0.5
+offset_top = -1.0
+offset_right = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_o2niq")
+theme_override_font_sizes/font_size = 18
+text = "Tutorial de Combate"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("9_o1nd3")
+_size_just_modified_by_autosizer = false
+_set_defaults = true
+_base_font_size = 18
+_current_font_size = 18
+_last_size_state = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Text" type="Label" parent="CanvasLayer/Control/TutorialBox"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.015
+anchor_top = 0.64
+anchor_right = 0.981
+anchor_bottom = 0.98
+offset_left = -0.5
+offset_top = -1.0
+offset_right = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_o2niq")
+theme_override_font_sizes/font_size = 17
+text = "Haz click izquierdo para avanzar con los dialogos. 
+- Puedes seleccionar un objetivo utilizando W y S
+- Attack: Ataca al objetivo seleccionado
+- Defend: Reduce el daño de los ataques este turno
+- Special: Utiliza dos turnos para un ataque fuerte
+- Run: Huyes del combate 
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("9_o1nd3")
+_size_just_modified_by_autosizer = false
+_set_defaults = true
+_base_font_size = 17
+_current_font_size = 17
+_last_size_state = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Background" type="TextureRect" parent="CanvasLayer/Control"]
@@ -334,17 +466,25 @@ anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("4_o2niq")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 36
 text = "SOME GUARDS APPEARED!"
+autowrap_mode = 3
+clip_text = true
+script = ExtResource("9_o1nd3")
+_size_just_modified_by_autosizer = false
+_set_defaults = true
+_base_font_size = 36
+_current_font_size = 36
+_last_size_state = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Label2" type="Label" parent="CanvasLayer/Control/Textbox"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.991913
+anchor_top = 0.9496
+anchor_right = 1.00004
+anchor_bottom = 0.9996
 offset_left = -18.96
 offset_top = -36.96
 offset_right = -5.95996
@@ -352,9 +492,17 @@ offset_bottom = -5.96
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("4_o2niq")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 36
 text = ">
 "
+autowrap_mode = 3
+clip_text = true
+script = ExtResource("9_o1nd3")
+_size_just_modified_by_autosizer = false
+_set_defaults = true
+_base_font_size = 36
+_current_font_size = 36
+_last_size_state = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="EnemyPos" type="Control" parent="CanvasLayer/Control"]
@@ -388,7 +536,7 @@ metadata/_edit_use_anchors_ = true
 [node name="PlayerGroup" parent="CanvasLayer/Control/PlayerPos" instance=ExtResource("5_ere8x")]
 position = Vector2(-145, 10)
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Control"]
+[node name="Simulation" type="Panel" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -402,7 +550,7 @@ offset_bottom = -119.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="Simulate" type="Button" parent="CanvasLayer/Control/Panel"]
+[node name="Simulate" type="Button" parent="CanvasLayer/Control/Simulation"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -424,4 +572,4 @@ text = "Simulate"
 [connection signal="pressed" from="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelUp/Defend" to="." method="_on_defend_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown/Special" to="." method="_on_special_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown/Run" to="." method="_on_run_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/Panel/Simulate" to="." method="_on_simulate_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Simulation/Simulate" to="." method="_on_simulate_pressed"]

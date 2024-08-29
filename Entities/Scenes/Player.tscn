@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bdf6tx1yr0l8t" path="res://Assets/Sprites/Extra/shadow.png" id="3_48lhx"]
 [ext_resource type="Script" path="res://Scripts/Silhouette.gd" id="3_t70k0"]
 [ext_resource type="Texture2D" uid="uid://cuu18qfxcgj1y" path="res://Assets/Sprites/Sword.png" id="4_4nbw2"]
-[ext_resource type="AudioStream" uid="uid://bib6yrh0jvpuh" path="res://Assets/Audio/SFX/player_walking.mp3" id="7_mij35"]
+[ext_resource type="AudioStream" uid="uid://bib6yrh0jvpuh" path="res://Assets/Audio/SFX/Walk.mp3" id="7_o13mi"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qv21b"]
 light_mode = 1
@@ -1128,7 +1128,7 @@ parameters/Stab_Attack/blend_position = Vector2(-1, -0.00440526)
 wait_time = 0.6
 
 [node name="AudioStreamPlayer_Walking" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("7_mij35")
+stream = ExtResource("7_o13mi")
 bus = &"SFX"
 
 [connection signal="body_entered" from="PlayerHitbox" to="." method="_on_hitbox_body_entered"]

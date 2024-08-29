@@ -1,9 +1,10 @@
-[gd_scene load_steps=35 format=3 uid="uid://d1uwpn8tp0npm"]
+[gd_scene load_steps=40 format=3 uid="uid://d1uwpn8tp0npm"]
 
 [ext_resource type="Script" path="res://Scenes/Main.gd" id="1_blxan"]
 [ext_resource type="Texture2D" uid="uid://dj4nqgvq5jik0" path="res://Assets/Forest_Tileset/Forest Tilesett.png" id="1_w2j2d"]
-[ext_resource type="AudioStream" uid="uid://cmg2j6g4hwe11" path="res://Assets/Audio/Music/Long Road Ahead.ogg" id="2_cpe6r"]
+[ext_resource type="AudioStream" uid="uid://ofbemp0tqsma" path="res://Assets/Audio/Music/Into the Woods.mp3" id="2_14utf"]
 [ext_resource type="Texture2D" uid="uid://ch0orh5vvo6q3" path="res://Assets/Forest_Tileset/Forest Cliff.png" id="2_g6dax"]
+[ext_resource type="FontFile" uid="uid://c071gd4te30u" path="res://Assets/Fonts/Adventurer.ttf" id="2_odr6n"]
 [ext_resource type="Texture2D" uid="uid://c3xro6qen7ltu" path="res://Assets/Forest_Tileset/Ground Tileset.png" id="3_nl6tj"]
 [ext_resource type="Texture2D" uid="uid://c74j0235b257s" path="res://Assets/Forest_Tileset/Forest Props.png" id="3_u26pk"]
 [ext_resource type="PackedScene" uid="uid://dbslkb3e7y3q6" path="res://Entities/Scenes/Player.tscn" id="3_usii2"]
@@ -19,6 +20,8 @@
 [ext_resource type="Script" path="res://Scripts/DayNightCycle.gd" id="14_etyes"]
 [ext_resource type="Resource" uid="uid://bqhoh51l8fx1h" path="res://Entities/Resources/Peasant.tres" id="15_4pdhg"]
 [ext_resource type="Resource" uid="uid://b8d61i6pytcal" path="res://Entities/Resources/Guard.tres" id="16_hh6i8"]
+[ext_resource type="Texture2D" uid="uid://cs6kslktxc6qo" path="res://Assets/Background/Tutorial1.png" id="20_xaqio"]
+[ext_resource type="Script" path="res://Addons/label_font_auto_sizer/label_auto_sizer.gd" id="22_5vwl2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q6lqt"]
 texture = ExtResource("1_w2j2d")
@@ -10196,12 +10199,32 @@ colors = PackedColorArray(0.168627, 0.180392, 0.333333, 1, 0.215686, 0.2, 0.3960
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_ouwxo"]
 gradient = SubResource("Gradient_cu310")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5cmi2"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ep38s"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+
 [node name="World" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_blxan")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_cpe6r")
+stream = ExtResource("2_14utf")
 autoplay = true
 bus = &"Music"
 
@@ -10266,3 +10289,106 @@ z_index = 1
 position = Vector2(252, 131)
 id = 2
 Enemies = Array[Resource]([ExtResource("15_4pdhg"), ExtResource("15_4pdhg"), ExtResource("16_hh6i8")])
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TutorialBox" type="Panel" parent="CanvasLayer"]
+z_index = 5
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -200.0
+offset_right = 250.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5cmi2")
+metadata/_edit_use_anchors_ = true
+
+[node name="ImagePanel" type="Panel" parent="CanvasLayer/TutorialBox"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.0325
+anchor_right = 0.962
+anchor_bottom = 0.61
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -1.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ep38s")
+metadata/_edit_use_anchors_ = true
+
+[node name="Image" type="TextureRect" parent="CanvasLayer/TutorialBox/ImagePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_xaqio")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="CanvasLayer/TutorialBox"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.013
+anchor_top = 0.02
+anchor_right = 0.979
+anchor_bottom = 0.075
+offset_left = -0.5
+offset_top = -1.0
+offset_right = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_odr6n")
+theme_override_font_sizes/font_size = 20
+text = "Tutorial de Exploracion"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("22_5vwl2")
+_size_just_modified_by_autosizer = false
+_set_defaults = true
+_base_font_size = 20
+_current_font_size = 20
+_last_size_state = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Text" type="Label" parent="CanvasLayer/TutorialBox"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.015
+anchor_top = 0.665
+anchor_right = 0.981
+anchor_bottom = 0.98
+offset_left = -0.5
+offset_top = -1.0
+offset_right = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_odr6n")
+theme_override_font_sizes/font_size = 22
+text = "Bienvenido aventurero al mundo de Skeleton Quest.
+
+Primero deberás explorar tus alrededores, para moverte utiliza las teclas W A S D
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("22_5vwl2")
+_size_just_modified_by_autosizer = false
+_set_defaults = true
+_base_font_size = 22
+_current_font_size = 22
+_last_size_state = 1
+metadata/_edit_use_anchors_ = true

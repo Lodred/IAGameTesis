@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ofbemp0tqsma"
+path="res://.godot/imported/Into the Woods.mp3-386df91b5d175e8b4334c3380f5fecb0.mp3str"
+
+[deps]
+
+source_file="res://Assets/Audio/Music/Into the Woods.mp3"
+dest_files=["res://.godot/imported/Into the Woods.mp3-386df91b5d175e8b4334c3380f5fecb0.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4
