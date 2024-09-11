@@ -1,11 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://bwrpldnxp84nb"]
+[gd_scene load_steps=38 format=3 uid="uid://bwrpldnxp84nb"]
 
 [ext_resource type="Texture2D" uid="uid://dt8xhrg4pf8qa" path="res://Assets/Background/battleback1.png" id="1_34wcb"]
-[ext_resource type="Script" path="res://Scenes/Combat.gd" id="1_75bnx"]
+[ext_resource type="Script" path="res://Scripts/Combat.gd" id="1_75bnx"]
 [ext_resource type="FontFile" uid="uid://b7givhsythdfv" path="res://Assets/Fonts/NESCyrillic.ttf" id="2_1ux7k"]
 [ext_resource type="Resource" uid="uid://b8d61i6pytcal" path="res://Entities/Resources/Guard.tres" id="2_ky36b"]
 [ext_resource type="Texture2D" uid="uid://ddupqweb3gluf" path="res://Assets/GUI/GUI.png" id="2_lmv22"]
-[ext_resource type="Script" path="res://Scripts/Simulation.gd" id="3_ixcmd"]
 [ext_resource type="AudioStream" uid="uid://cswnh5ip0abpu" path="res://Assets/Audio/Music/If It's a Fight You Want.ogg" id="3_qpoa6"]
 [ext_resource type="AudioStream" uid="uid://cvtuoihst4ntb" path="res://Assets/Audio/SFX/Click.wav" id="4_l1w8d"]
 [ext_resource type="FontFile" uid="uid://c071gd4te30u" path="res://Assets/Fonts/Adventurer.ttf" id="4_o2niq"]
@@ -14,6 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://dq5nmld8ceu05" path="res://Assets/Background/Tutorial2.png" id="5_l7e3f"]
 [ext_resource type="Script" path="res://Addons/label_font_auto_sizer/label_auto_sizer.gd" id="9_o1nd3"]
 [ext_resource type="PackedScene" uid="uid://jd2ooy8r3ham" path="res://Scenes/Button_combat.tscn" id="12_cahqt"]
+[ext_resource type="Script" path="res://Scripts/PauseMenu.gd" id="14_hon8t"]
+[ext_resource type="PackedScene" uid="uid://xncvmm51esu1" path="res://Scenes/Button_plus.tscn" id="15_m4apt"]
+[ext_resource type="Script" path="res://Scripts/SoundSlider.gd" id="16_trm1y"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xpkih"]
 bg_color = Color(0, 0, 0, 1)
@@ -124,16 +126,147 @@ border_width_right = 4
 border_width_bottom = 4
 border_color = Color(1, 1, 1, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xvrs3"]
+bg_color = Color(0, 0, 0, 0.705882)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.941176, 0.780392, 0.682353, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5qay5"]
+bg_color = Color(0.458824, 0.278431, 0.184314, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.941176, 0.780392, 0.682353, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 1
+shadow_color = Color(0.941176, 0.780392, 0.682353, 1)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xyu3w"]
+bg_color = Color(0.839216, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.52549, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 1
+shadow_color = Color(0.341176, 0, 0, 1)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e8pih"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.745098, 0.843137, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 1
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0j1ot"]
+bg_color = Color(0, 0, 0, 0.705882)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.941176, 0.780392, 0.682353, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_8wsik"]
+font = ExtResource("4_o2niq")
+font_size = 36
+font_color = Color(0.941176, 0.780392, 0.682353, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vd6lu"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_at2ra"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bs5wv"]
+bg_color = Color(0.458824, 0.278431, 0.184314, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.941176, 0.780392, 0.682353, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 1
+shadow_color = Color(0.941176, 0.780392, 0.682353, 1)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o1m3l"]
+bg_color = Color(0.839216, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.52549, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 1
+shadow_color = Color(0.341176, 0, 0, 1)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6d548"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.745098, 0.843137, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 1
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m4fnh"]
+bg_color = Color(0, 0, 0, 0.4)
+
 [node name="Combat" type="Node2D"]
 script = ExtResource("1_75bnx")
 Enemies = Array[Resource]([ExtResource("2_ky36b"), ExtResource("2_ky36b")])
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_qpoa6")
 autoplay = true
 bus = &"Music"
 
-[node name="AudioStreamPlayer_Click" type="AudioStreamPlayer2D" parent="."]
+[node name="UI" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_l1w8d")
 bus = &"UI"
 
@@ -149,7 +282,6 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("3_ixcmd")
 metadata/_edit_use_anchors_ = true
 
 [node name="TutorialBox" type="Panel" parent="CanvasLayer/Control"]
@@ -537,40 +669,284 @@ metadata/_edit_use_anchors_ = true
 [node name="PlayerGroup" parent="CanvasLayer/Control/PlayerPos" instance=ExtResource("5_ere8x")]
 position = Vector2(-145, 10)
 
-[node name="Simulation" type="Panel" parent="CanvasLayer/Control"]
+[node name="PauseMenu" type="CanvasLayer" parent="."]
+process_mode = 2
+visible = false
+script = ExtResource("14_hon8t")
+
+[node name="MenuBox" type="Panel" parent="PauseMenu"]
+z_index = 1
+anchors_preset = -1
+anchor_left = 0.231
+anchor_top = 0.469
+anchor_right = 0.44184
+anchor_bottom = 0.469
+offset_left = -236.112
+offset_top = -103.912
+offset_right = -221.0
+offset_bottom = 176.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xvrs3")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/MenuBox"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -95.0
+offset_right = 100.0
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="Resume" parent="PauseMenu/MenuBox/VBoxContainer" instance=ExtResource("15_m4apt")]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("2_1ux7k")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_5qay5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xyu3w")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_e8pih")
+theme_override_styles/focus = SubResource("StyleBoxFlat_xyu3w")
+text = "Resume"
+
+[node name="Settings" parent="PauseMenu/MenuBox/VBoxContainer" instance=ExtResource("15_m4apt")]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("2_1ux7k")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_5qay5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xyu3w")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_e8pih")
+theme_override_styles/focus = SubResource("StyleBoxFlat_xyu3w")
+text = "Settings
+"
+
+[node name="Exit" parent="PauseMenu/MenuBox/VBoxContainer" instance=ExtResource("15_m4apt")]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("2_1ux7k")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_5qay5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xyu3w")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_e8pih")
+theme_override_styles/focus = SubResource("StyleBoxFlat_xyu3w")
+text = "Exit Game
+"
+
+[node name="AudioBox" type="Panel" parent="PauseMenu"]
+z_index = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.430556
+anchor_right = 0.5
+anchor_bottom = 0.430556
+offset_left = -250.0
+offset_top = -174.0
+offset_right = 250.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0j1ot")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/AudioBox"]
+layout_mode = 1
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -124.0
-offset_top = -150.0
-offset_right = -1.0
-offset_bottom = -119.0
-grow_horizontal = 0
-grow_vertical = 0
+offset_top = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
 
-[node name="Simulate" type="Button" parent="CanvasLayer/Control/Simulation"]
+[node name="Label" type="Label" parent="PauseMenu/AudioBox/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Audio"
+label_settings = SubResource("LabelSettings_8wsik")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PauseMenu/AudioBox"]
 layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -54.0
+offset_top = 60.0
+offset_right = 54.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Master" type="HBoxContainer" parent="PauseMenu/AudioBox/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="PauseMenu/AudioBox/VBoxContainer2/Master"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Master Volume"
+
+[node name="VSeparator" type="VSeparator" parent="PauseMenu/AudioBox/VBoxContainer2/Master"]
+layout_mode = 2
+theme_override_constants/separation = 50
+theme_override_styles/separator = SubResource("StyleBoxTexture_vd6lu")
+
+[node name="Master_Slider" type="HSlider" parent="PauseMenu/AudioBox/VBoxContainer2/Master"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+focus_mode = 0
+max_value = 1.0
+step = 0.001
+script = ExtResource("16_trm1y")
+bus_name = "Master"
+
+[node name="HSeparator" type="HSeparator" parent="PauseMenu/AudioBox/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxTexture_at2ra")
+
+[node name="Music" type="HBoxContainer" parent="PauseMenu/AudioBox/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="PauseMenu/AudioBox/VBoxContainer2/Music"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Music Volume"
+
+[node name="VSeparator" type="VSeparator" parent="PauseMenu/AudioBox/VBoxContainer2/Music"]
+layout_mode = 2
+theme_override_constants/separation = 50
+theme_override_styles/separator = SubResource("StyleBoxTexture_vd6lu")
+
+[node name="Music_Slider" type="HSlider" parent="PauseMenu/AudioBox/VBoxContainer2/Music"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("16_trm1y")
+bus_name = "Music"
+
+[node name="HSeparator2" type="HSeparator" parent="PauseMenu/AudioBox/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxTexture_at2ra")
+
+[node name="SFX" type="HBoxContainer" parent="PauseMenu/AudioBox/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="PauseMenu/AudioBox/VBoxContainer2/SFX"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Effects Volume"
+
+[node name="VSeparator" type="VSeparator" parent="PauseMenu/AudioBox/VBoxContainer2/SFX"]
+layout_mode = 2
+theme_override_constants/separation = 50
+theme_override_styles/separator = SubResource("StyleBoxTexture_vd6lu")
+
+[node name="SFX_Slider" type="HSlider" parent="PauseMenu/AudioBox/VBoxContainer2/SFX"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("16_trm1y")
+bus_name = "SFX"
+
+[node name="HSeparator3" type="HSeparator" parent="PauseMenu/AudioBox/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxTexture_at2ra")
+
+[node name="UI" type="HBoxContainer" parent="PauseMenu/AudioBox/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="PauseMenu/AudioBox/VBoxContainer2/UI"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "UI Volume"
+
+[node name="VSeparator" type="VSeparator" parent="PauseMenu/AudioBox/VBoxContainer2/UI"]
+layout_mode = 2
+theme_override_constants/separation = 50
+theme_override_styles/separator = SubResource("StyleBoxTexture_vd6lu")
+
+[node name="UI_Slider" type="HSlider" parent="PauseMenu/AudioBox/VBoxContainer2/UI"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("16_trm1y")
+bus_name = "UI"
+
+[node name="Save_Audio" parent="PauseMenu/AudioBox" instance=ExtResource("15_m4apt")]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = -90.0
+offset_right = 80.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("2_1ux7k")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_bs5wv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_o1m3l")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6d548")
+theme_override_styles/focus = SubResource("StyleBoxFlat_o1m3l")
+text = "Close
+"
+
+[node name="BlackEffect" type="Panel" parent="PauseMenu"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_1ux7k")
-theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxFlat_dd638")
-theme_override_styles/hover = SubResource("StyleBoxFlat_055kq")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_x4i1e")
-text = "Simulate"
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_m4fnh")
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelUp/Attack" to="." method="_on_attack_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelUp/Defend" to="." method="_on_defend_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown/Special" to="." method="_on_special_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel/ActionPanelDown/Run" to="." method="_on_run_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/Simulation/Simulate" to="." method="_on_simulate_pressed"]
+[connection signal="pressed" from="PauseMenu/MenuBox/VBoxContainer/Resume" to="PauseMenu" method="_on_resume_pressed"]
+[connection signal="pressed" from="PauseMenu/MenuBox/VBoxContainer/Settings" to="PauseMenu" method="_on_settings_pressed"]
+[connection signal="pressed" from="PauseMenu/MenuBox/VBoxContainer/Exit" to="PauseMenu" method="_on_exit_pressed"]
+[connection signal="pressed" from="PauseMenu/AudioBox/Save_Audio" to="PauseMenu" method="_on_save_audio_pressed"]

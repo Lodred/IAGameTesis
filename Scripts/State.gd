@@ -1,5 +1,10 @@
 extends Node
 
+var ally_file_path: String = "res://Qtables/q_table_ally_default.json"
+var enemy_file_path: String = "res://Qtables/q_table_ally_default.json"
+var reward_type: String = "mixed"
+var use_tables: bool = true
+
 var player_position = Vector2(136, -314)
 var enemy_to_remove_id = []
 

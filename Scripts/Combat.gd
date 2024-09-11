@@ -5,6 +5,8 @@ signal Textbox_closed
 signal Enemies_loaded
 signal Turn_completed
 
+@onready var Menu = $PauseMenu
+
 @onready var Textbox = $CanvasLayer/Control/Textbox
 @onready var TextboxLabel = $CanvasLayer/Control/Textbox/Label
 @onready var ActionPanel = $CanvasLayer/Control/CombatPanel/CombatItems/ActionPanel
@@ -12,9 +14,8 @@ signal Turn_completed
 @onready var AllyHealth = $CanvasLayer/Control/CombatPanel/CombatItems/HealthPanel/AllyHealth/AllyHealthBar
 @onready var EnemyGroup = $CanvasLayer/Control/EnemyPos/EnemyGroup
 @onready var PlayerGroup = $CanvasLayer/Control/PlayerPos/PlayerGroup
-@onready var Controller = $CanvasLayer/Control
 @onready var Tutorial = $CanvasLayer/Control/TutorialBox
-@onready var Click_sound = $AudioStreamPlayer_Click
+@onready var Click_sound = $UI
 
 const BaseEnemy = preload("res://Entities/BaseEnemy.gd")
 @export var Enemies: Array[Resource] = []
@@ -22,6 +23,7 @@ const BaseEnemy = preload("res://Entities/BaseEnemy.gd")
 var player_starting_hp
 var ally_starting_hp
 
+var is_paused = false # Variable to track pause state
 var running = false
 var battleover = false
 var turn_queue: Array = []
@@ -77,12 +79,15 @@ func _ready():
 	
 	player_starting_hp = State.Player_current_health
 	ally_starting_hp = State.Ally_current_health
+	reward_type = State.reward_type
 	
 	set_health(PlayerHealth, State.Player_current_health, State.Player_max_health)
 	set_health(AllyHealth, State.Ally_current_health, State.Ally_max_health)
 	
 	if State.Tutorial_Combat == false:
 		Tutorial.set_visible(false)
+	
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 	Textbox.hide()
 	ActionPanel.hide()
@@ -198,7 +203,7 @@ func win_battle():
 	update_q_table(enemy_last_state, enemy_last_action, current_state, enemy_final_reward, "enemy")
 	ally_accumulated_reward += ally_final_reward
 	enemy_accumulated_reward += enemy_final_reward
-	#save_q_tables()
+	save_q_tables()
 	display_text("All enemies have been slain!")
 	#print(q_table_ally)
 	await Textbox_closed
@@ -219,7 +224,7 @@ func lose_battle():
 	update_q_table(enemy_last_state, enemy_last_action, current_state, enemy_final_reward, "enemy")
 	ally_accumulated_reward += ally_final_reward
 	enemy_accumulated_reward += enemy_final_reward
-	#save_q_tables()
+	save_q_tables()
 	display_text("All allies have been defeated!")
 	await Textbox_closed
 	await get_tree().create_timer(0.8).timeout
@@ -525,15 +530,21 @@ func load_q_table_from_json(file_path):
 
 # Save the Q-tables at the end of each battle
 func save_q_tables():
-	ally_combat_number += 1
-	enemy_combat_number += 1
-	save_q_table_as_json("res://Qtables/q_table_ally.json", q_table_ally, ally_combat_number, ally_accumulated_reward)
-	save_q_table_as_json("res://Qtables/q_table_enemy.json", q_table_enemy, enemy_combat_number, enemy_accumulated_reward)
+	if State.use_tables == false:
+		ally_combat_number += 1
+		enemy_combat_number += 1
+		save_q_table_as_json("res://Qtables/q_table_ally_manual.json", q_table_ally, ally_combat_number, ally_accumulated_reward)
+		save_q_table_as_json("res://Qtables/q_table_enemy_manual.json", q_table_enemy, enemy_combat_number, enemy_accumulated_reward)
 
 # Load the Q-tables at the start of the game
 func load_q_tables():
-	var ally_data = load_q_table_from_json("res://Qtables/q_table_ally.json")
-	var enemy_data = load_q_table_from_json("res://Qtables/q_table_enemy.json")
+	
+	var ally_data = load_q_table_from_json(State.ally_file_path)
+	var enemy_data = load_q_table_from_json(State.enemy_file_path)
+	
+	if State.use_tables == false:
+		ally_data = load_q_table_from_json("")
+		enemy_data = load_q_table_from_json("")
 	
 	if ally_data.size() > 0:
 		var last_ally_entry = ally_data[ally_data.size() - 1]
@@ -617,11 +628,25 @@ func _on_run_pressed():
 	get_tree().change_scene_to_file("res://Scenes/Main.tscn")
 	#get_tree().quit()
 
-func _on_simulate_pressed():
-	Controller.start_sim(100)
-
 func check_for_allies():
 	while Textbox.visible:
 		await Textbox_closed
 	if PlayerGroup.get_child(0).is_alive == false and PlayerGroup.get_child(1).is_alive == false:
 		lose_battle()
+
+func _process(delta):
+	if Input.is_action_just_pressed("Pause"):
+		is_paused = !is_paused # Toggle pause state
+		pause(is_paused)
+
+func pause(state):
+	if state:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE) # Show mouse when paused
+		get_tree().paused = true # Pause the game
+		Menu.visible = true
+		# Show the pause menu
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) # Hide mouse during gameplay
+		get_tree().paused = false # Resume the game
+		Menu.visible = false
+		# Hide the pause menu

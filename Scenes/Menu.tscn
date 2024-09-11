@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cg60hfkrsqlwx"]
+[gd_scene load_steps=19 format=3 uid="uid://cg60hfkrsqlwx"]
 
 [ext_resource type="Script" path="res://Scripts/Menu.gd" id="1_1cmo4"]
 [ext_resource type="Texture2D" uid="uid://01nxjt5ju0dj" path="res://Assets/Background/MainMenu.png" id="1_pgxi5"]
@@ -6,9 +6,14 @@
 [ext_resource type="FontFile" uid="uid://b7givhsythdfv" path="res://Assets/Fonts/NESCyrillic.ttf" id="3_xixey"]
 [ext_resource type="PackedScene" uid="uid://xncvmm51esu1" path="res://Scenes/Button_plus.tscn" id="4_3626f"]
 [ext_resource type="AudioStream" uid="uid://cmge5bil45x6g" path="res://Assets/Audio/Music/xDeviruchi - Title Theme .wav" id="5_cy422"]
+[ext_resource type="Script" path="res://Scripts/ResolutionButton.gd" id="6_4y3bx"]
+[ext_resource type="Script" path="res://Scripts/SoundSlider.gd" id="6_c4e0k"]
+[ext_resource type="Script" path="res://Scripts/FileSelection.gd" id="8_cxl8e"]
+[ext_resource type="Script" path="res://Scripts/RewardButton.gd" id="8_nw2o1"]
+[ext_resource type="Script" path="res://Scripts/Simulation.gd" id="9_js3ng"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6b3vc"]
-bg_color = Color(0.2, 0.160784, 0.160784, 0.705882)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1n4yt"]
+bg_color = Color(0.160784, 0.168627, 0.176471, 0.705882)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
@@ -74,6 +79,10 @@ corner_detail = 1
 shadow_color = Color(1, 1, 1, 1)
 shadow_size = 1
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u342p"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_85ile"]
+
 [node name="Menu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -106,15 +115,20 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="Panel" type="Panel" parent="."]
+[node name="MainMenu" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="MainMenu"]
 layout_mode = 2
 offset_left = 147.0
 offset_top = 213.0
 offset_right = 421.0
 offset_bottom = 574.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_6b3vc")
+theme_override_styles/panel = SubResource("StyleBoxFlat_1n4yt")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/Panel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -124,7 +138,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="Panel/VBoxContainer"]
+[node name="Label" type="Label" parent="MainMenu/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Skeleton Quest"
@@ -132,7 +146,7 @@ label_settings = SubResource("LabelSettings_w3va3")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainMenu/Panel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -144,13 +158,13 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/Panel/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 20
 metadata/_edit_lock_ = true
 
-[node name="Start" parent="Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
+[node name="Start" parent="MainMenu/Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
@@ -164,21 +178,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
 theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
 text = "Start Game"
 
-[node name="Simulation" parent="Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
-custom_minimum_size = Vector2(200, 50)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
-theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
-theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
-theme_override_fonts/font = ExtResource("3_xixey")
-theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
-theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
-theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
-text = "Simulate"
-
-[node name="Settings" parent="Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
+[node name="Settings" parent="MainMenu/Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
@@ -193,7 +193,21 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
 text = "Settings
 "
 
-[node name="Exit" parent="Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
+[node name="Agents" parent="MainMenu/Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("3_xixey")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
+text = "IA AgentS"
+
+[node name="Exit" parent="MainMenu/Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
@@ -208,17 +222,896 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
 text = "Exit Game
 "
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="Settings" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_left = 147.0
+offset_top = 213.0
+offset_right = 421.0
+offset_bottom = 574.0
+
+[node name="Panel" type="Panel" parent="Settings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1n4yt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Settings"
+label_settings = SubResource("LabelSettings_w3va3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_right = -40.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings/Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+metadata/_edit_lock_ = true
+
+[node name="Video_Settings" parent="Settings/Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("3_xixey")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
+text = "Video"
+
+[node name="Audio_Settings" parent="Settings/Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("3_xixey")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
+text = "Audio
+"
+
+[node name="Back_Settings" parent="Settings/Panel" instance=ExtResource("4_3626f")]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = -90.0
+offset_right = 80.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("3_xixey")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
+text = "Back
+"
+
+[node name="Video" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 147.0
+offset_top = 213.0
+offset_right = 421.0
+offset_bottom = 574.0
+
+[node name="Panel" type="Panel" parent="Video"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 297.0
+offset_top = -39.0
+offset_right = 673.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1n4yt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Video/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Video/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Video"
+label_settings = SubResource("LabelSettings_w3va3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Video/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 60.0
+offset_right = -40.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Resolution" type="HBoxContainer" parent="Video/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="Video/Panel/VBoxContainer2/Resolution"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Resolution"
+
+[node name="VSeparator" type="VSeparator" parent="Video/Panel/VBoxContainer2/Resolution"]
+layout_mode = 2
+theme_override_constants/separation = 200
+theme_override_styles/separator = SubResource("StyleBoxTexture_u342p")
+
+[node name="ResolutionButton" type="OptionButton" parent="Video/Panel/VBoxContainer2/Resolution"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+script = ExtResource("6_4y3bx")
+
+[node name="HSeparator" type="HSeparator" parent="Video/Panel/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxTexture_85ile")
+
+[node name="Fullscreen" type="HBoxContainer" parent="Video/Panel/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Video/Panel/VBoxContainer2/Fullscreen"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Fullscreen"
+
+[node name="VSeparator" type="VSeparator" parent="Video/Panel/VBoxContainer2/Fullscreen"]
+layout_mode = 2
+theme_override_constants/separation = 200
+theme_override_styles/separator = SubResource("StyleBoxTexture_u342p")
+
+[node name="Fullscreen" type="CheckBox" parent="Video/Panel/VBoxContainer2/Fullscreen"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="Video/Panel/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxTexture_85ile")
+
+[node name="Borderless" type="HBoxContainer" parent="Video/Panel/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Video/Panel/VBoxContainer2/Borderless"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Borderless"
+
+[node name="VSeparator" type="VSeparator" parent="Video/Panel/VBoxContainer2/Borderless"]
+layout_mode = 2
+theme_override_constants/separation = 200
+theme_override_styles/separator = SubResource("StyleBoxTexture_u342p")
+
+[node name="Borderless" type="CheckBox" parent="Video/Panel/VBoxContainer2/Borderless"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="Save_Video" parent="Video/Panel" instance=ExtResource("4_3626f")]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = -90.0
+offset_right = 80.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("3_xixey")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
+text = "Save
+"
+
+[node name="Audio" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 147.0
+offset_top = 213.0
+offset_right = 421.0
+offset_bottom = 574.0
+
+[node name="Panel" type="Panel" parent="Audio"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 297.0
+offset_top = -39.0
+offset_right = 673.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1n4yt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Audio/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="Audio/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Audio"
+label_settings = SubResource("LabelSettings_w3va3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Audio/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 60.0
+offset_right = -21.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Master" type="HBoxContainer" parent="Audio/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="Audio/Panel/VBoxContainer2/Master"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Master Volume"
+
+[node name="VSeparator" type="VSeparator" parent="Audio/Panel/VBoxContainer2/Master"]
+layout_mode = 2
+theme_override_constants/separation = 200
+theme_override_styles/separator = SubResource("StyleBoxTexture_u342p")
+
+[node name="Master_Slider" type="HSlider" parent="Audio/Panel/VBoxContainer2/Master"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+focus_mode = 0
+max_value = 1.0
+step = 0.001
+script = ExtResource("6_c4e0k")
+bus_name = "Master"
+
+[node name="HSeparator" type="HSeparator" parent="Audio/Panel/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxTexture_85ile")
+
+[node name="Music" type="HBoxContainer" parent="Audio/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="Audio/Panel/VBoxContainer2/Music"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Music Volume"
+
+[node name="VSeparator" type="VSeparator" parent="Audio/Panel/VBoxContainer2/Music"]
+layout_mode = 2
+theme_override_constants/separation = 200
+theme_override_styles/separator = SubResource("StyleBoxTexture_u342p")
+
+[node name="Music_Slider" type="HSlider" parent="Audio/Panel/VBoxContainer2/Music"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("6_c4e0k")
+bus_name = "Music"
+
+[node name="HSeparator2" type="HSeparator" parent="Audio/Panel/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxTexture_85ile")
+
+[node name="SFX" type="HBoxContainer" parent="Audio/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="Audio/Panel/VBoxContainer2/SFX"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Effects Volume"
+
+[node name="VSeparator" type="VSeparator" parent="Audio/Panel/VBoxContainer2/SFX"]
+layout_mode = 2
+theme_override_constants/separation = 200
+theme_override_styles/separator = SubResource("StyleBoxTexture_u342p")
+
+[node name="SFX_Slider" type="HSlider" parent="Audio/Panel/VBoxContainer2/SFX"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("6_c4e0k")
+bus_name = "SFX"
+
+[node name="HSeparator3" type="HSeparator" parent="Audio/Panel/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxTexture_85ile")
+
+[node name="UI" type="HBoxContainer" parent="Audio/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="Audio/Panel/VBoxContainer2/UI"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "UI Volume"
+
+[node name="VSeparator" type="VSeparator" parent="Audio/Panel/VBoxContainer2/UI"]
+layout_mode = 2
+theme_override_constants/separation = 200
+theme_override_styles/separator = SubResource("StyleBoxTexture_u342p")
+
+[node name="UI_Slider" type="HSlider" parent="Audio/Panel/VBoxContainer2/UI"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("6_c4e0k")
+bus_name = "UI"
+
+[node name="Save_Audio" parent="Audio/Panel" instance=ExtResource("4_3626f")]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = -90.0
+offset_right = 80.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("3_xixey")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
+text = "Save
+"
+
+[node name="IAAgents" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 147.0
+offset_top = 213.0
+offset_right = 421.0
+offset_bottom = 574.0
+
+[node name="Panel" type="Panel" parent="IAAgents"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1n4yt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="IAAgents/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="IAAgents/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "IA Agents"
+label_settings = SubResource("LabelSettings_w3va3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="IAAgents/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_right = -40.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="IAAgents/Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="QTables" parent="IAAgents/Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("3_xixey")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
+text = "Q-Tables"
+
+[node name="Training" parent="IAAgents/Panel/HBoxContainer/VBoxContainer" instance=ExtResource("4_3626f")]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("3_xixey")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
+text = "Training
+"
+
+[node name="Back_Agents" parent="IAAgents/Panel" instance=ExtResource("4_3626f")]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = -90.0
+offset_right = 80.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("3_xixey")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
+text = "Back
+"
+
+[node name="QTables" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 147.0
+offset_top = 213.0
+offset_right = 421.0
+offset_bottom = 574.0
+script = ExtResource("8_cxl8e")
+
+[node name="FileDialog" type="FileDialog" parent="QTables"]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(500, 300)
+ok_button_text = "Open"
+file_mode = 0
+root_subfolder = "res://Qtables/"
+
+[node name="Panel" type="Panel" parent="QTables"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 297.0
+offset_top = -39.0
+offset_right = 673.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1n4yt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="QTables/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="QTables/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Q-Tables"
+label_settings = SubResource("LabelSettings_w3va3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="QTables/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 60.0
+offset_right = -40.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Ally" type="HBoxContainer" parent="QTables/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="QTables/Panel/VBoxContainer2/Ally"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Ally Q-Table"
+
+[node name="VSeparator" type="VSeparator" parent="QTables/Panel/VBoxContainer2/Ally"]
+layout_mode = 2
+theme_override_constants/separation = 200
+theme_override_styles/separator = SubResource("StyleBoxTexture_u342p")
+
+[node name="AllyTable" parent="QTables/Panel/VBoxContainer2/Ally" instance=ExtResource("4_3626f")]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("3_xixey")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
+text = "Ally Table
+"
+
+[node name="HSeparator" type="HSeparator" parent="QTables/Panel/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxTexture_85ile")
+
+[node name="Enemy" type="HBoxContainer" parent="QTables/Panel/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="QTables/Panel/VBoxContainer2/Enemy"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Enemy Q-Table"
+
+[node name="VSeparator" type="VSeparator" parent="QTables/Panel/VBoxContainer2/Enemy"]
+layout_mode = 2
+theme_override_constants/separation = 200
+theme_override_styles/separator = SubResource("StyleBoxTexture_u342p")
+
+[node name="EnemyTable" parent="QTables/Panel/VBoxContainer2/Enemy" instance=ExtResource("4_3626f")]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("3_xixey")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
+text = "Enemy Table
+"
+
+[node name="HSeparator2" type="HSeparator" parent="QTables/Panel/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxTexture_85ile")
+
+[node name="NoTable" type="HBoxContainer" parent="QTables/Panel/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="QTables/Panel/VBoxContainer2/NoTable"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Use Q-Tables?"
+
+[node name="VSeparator" type="VSeparator" parent="QTables/Panel/VBoxContainer2/NoTable"]
+layout_mode = 2
+theme_override_constants/separation = 200
+theme_override_styles/separator = SubResource("StyleBoxTexture_u342p")
+
+[node name="Borderless" type="CheckBox" parent="QTables/Panel/VBoxContainer2/NoTable"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+button_pressed = true
+
+[node name="Save_Tables" parent="QTables/Panel" instance=ExtResource("4_3626f")]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = -90.0
+offset_right = 80.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("3_xixey")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
+text = "Save
+"
+
+[node name="Training" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 147.0
+offset_top = 213.0
+offset_right = 421.0
+offset_bottom = 574.0
+
+[node name="Panel" type="Panel" parent="Training"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 297.0
+offset_top = -39.0
+offset_right = 673.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1n4yt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Training/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Training/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Training"
+label_settings = SubResource("LabelSettings_w3va3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Training/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 60.0
+offset_right = -40.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Reward" type="HBoxContainer" parent="Training/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="Training/Panel/VBoxContainer2/Reward"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Reward System"
+
+[node name="VSeparator" type="VSeparator" parent="Training/Panel/VBoxContainer2/Reward"]
+layout_mode = 2
+theme_override_constants/separation = 200
+theme_override_styles/separator = SubResource("StyleBoxTexture_u342p")
+
+[node name="RewardButton" type="OptionButton" parent="Training/Panel/VBoxContainer2/Reward"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+script = ExtResource("8_nw2o1")
+
+[node name="HSeparator" type="HSeparator" parent="Training/Panel/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxTexture_85ile")
+
+[node name="Number" type="HBoxContainer" parent="Training/Panel/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Training/Panel/VBoxContainer2/Number"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Number of Combats"
+
+[node name="VSeparator" type="VSeparator" parent="Training/Panel/VBoxContainer2/Number"]
+layout_mode = 2
+theme_override_constants/separation = 200
+theme_override_styles/separator = SubResource("StyleBoxTexture_u342p")
+
+[node name="SpinBox" type="SpinBox" parent="Training/Panel/VBoxContainer2/Number"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+min_value = 1.0
+max_value = 1000.0
+value = 1.0
+
+[node name="HSeparator2" type="HSeparator" parent="Training/Panel/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxTexture_85ile")
+
+[node name="Simulation" type="HBoxContainer" parent="Training/Panel/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Simulate" type="Control" parent="Training/Panel/VBoxContainer2/Simulation"]
+layout_mode = 2
+script = ExtResource("9_js3ng")
+
+[node name="Label" type="Label" parent="Training/Panel/VBoxContainer2/Simulation"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Train Q-Tables"
+
+[node name="VSeparator" type="VSeparator" parent="Training/Panel/VBoxContainer2/Simulation"]
+layout_mode = 2
+theme_override_constants/separation = 200
+theme_override_styles/separator = SubResource("StyleBoxTexture_u342p")
+
+[node name="Simulation" parent="Training/Panel/VBoxContainer2/Simulation" instance=ExtResource("4_3626f")]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("3_xixey")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
+text = "Train
+"
+
+[node name="Save_Training" parent="Training/Panel" instance=ExtResource("4_3626f")]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = -90.0
+offset_right = 80.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_hover_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_colors/font_focus_color = Color(0.941176, 0.898039, 0.87451, 1)
+theme_override_fonts/font = ExtResource("3_xixey")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjhja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5fehk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wip7u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
+text = "Save
+"
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_cy422")
 autoplay = true
 bus = &"Music"
 
-[node name="AudioStreamPlayer2D_SFX" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_cy422")
-autoplay = true
-bus = &"Music"
-
-[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/Simulation" to="." method="_on_simulation_pressed"]
-[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="MainMenu/Panel/HBoxContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MainMenu/Panel/HBoxContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="MainMenu/Panel/HBoxContainer/VBoxContainer/Agents" to="." method="_on_agents_pressed"]
+[connection signal="pressed" from="MainMenu/Panel/HBoxContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Settings/Panel/HBoxContainer/VBoxContainer/Video_Settings" to="." method="_on_video_settings_pressed"]
+[connection signal="pressed" from="Settings/Panel/HBoxContainer/VBoxContainer/Audio_Settings" to="." method="_on_audio_settings_pressed"]
+[connection signal="pressed" from="Settings/Panel/Back_Settings" to="." method="_on_back_settings_pressed"]
+[connection signal="toggled" from="Video/Panel/VBoxContainer2/Fullscreen/Fullscreen" to="." method="_on_fullscreen_toggled"]
+[connection signal="toggled" from="Video/Panel/VBoxContainer2/Borderless/Borderless" to="." method="_on_borderless_toggled"]
+[connection signal="pressed" from="Video/Panel/Save_Video" to="." method="_on_save_video_pressed"]
+[connection signal="pressed" from="Audio/Panel/Save_Audio" to="." method="_on_save_audio_pressed"]
+[connection signal="pressed" from="IAAgents/Panel/HBoxContainer/VBoxContainer/QTables" to="." method="_on_q_tables_pressed"]
+[connection signal="pressed" from="IAAgents/Panel/HBoxContainer/VBoxContainer/Training" to="." method="_on_training_pressed"]
+[connection signal="pressed" from="IAAgents/Panel/Back_Agents" to="." method="_on_back_agents_pressed"]
+[connection signal="file_selected" from="QTables/FileDialog" to="QTables" method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="QTables/Panel/VBoxContainer2/Ally/AllyTable" to="QTables" method="_on_ally_button_pressed"]
+[connection signal="pressed" from="QTables/Panel/VBoxContainer2/Enemy/EnemyTable" to="QTables" method="_on_enemy_button_pressed"]
+[connection signal="toggled" from="QTables/Panel/VBoxContainer2/NoTable/Borderless" to="QTables" method="_on_borderless_toggled"]
+[connection signal="pressed" from="QTables/Panel/Save_Tables" to="." method="_on_save_tables_pressed"]
+[connection signal="item_selected" from="Training/Panel/VBoxContainer2/Reward/RewardButton" to="." method="_on_reward_button_item_selected"]
+[connection signal="pressed" from="Training/Panel/VBoxContainer2/Simulation/Simulation" to="." method="_on_simulation_pressed"]
+[connection signal="pressed" from="Training/Panel/Save_Training" to="." method="_on_save_training_pressed"]

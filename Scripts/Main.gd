@@ -1,9 +1,15 @@
 extends Node2D
 
+@onready var Menu = $PauseMenu
+
 var player
+var is_paused = false # Variable to track pause state
 
 func _ready():
+	
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	player = $Player
+	Menu.visible = false
 	
 	if State.Tutorial_Main == false:
 		$CanvasLayer/TutorialBox.set_visible(false)
@@ -17,7 +23,6 @@ func _ready():
 	if State.Ally_alive == false:
 		State.Ally_current_health = 10
 	player.position = State.load_player_position()
-
 func remove_enemy_by_id(id):
 	var enemy_to_remove = null
 	for child in get_children():
@@ -29,7 +34,24 @@ func remove_enemy_by_id(id):
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		close_tutorial()
-		
+
 func close_tutorial():
 	State.Tutorial_Main = false
 	$CanvasLayer/TutorialBox.set_visible(false)
+
+func _process(delta):
+	if Input.is_action_just_pressed("Pause"):
+		is_paused = !is_paused # Toggle pause state
+		pause(is_paused)
+
+func pause(state):
+	if state:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE) # Show mouse when paused
+		get_tree().paused = true # Pause the game
+		Menu.visible = true
+		# Show the pause menu
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) # Hide mouse during gameplay
+		get_tree().paused = false # Resume the game
+		Menu.visible = false
+		# Hide the pause menu
