@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://dpt3nqiy805dn"]
 
 [ext_resource type="Script" path="res://Scripts/Lose.gd" id="1_5ol82"]
-[ext_resource type="Texture2D" uid="uid://dkscjlrqsrohl" path="res://Assets/Background/Win.png" id="2_448bo"]
+[ext_resource type="Texture2D" uid="uid://ch0ji4pmi72ve" path="res://Assets/Background/Win.png" id="2_448bo"]
 [ext_resource type="FontFile" uid="uid://c071gd4te30u" path="res://Assets/Fonts/Adventurer.ttf" id="3_u3nwc"]
 [ext_resource type="PackedScene" uid="uid://xncvmm51esu1" path="res://Scenes/Button_plus.tscn" id="4_5wtos"]
 [ext_resource type="FontFile" uid="uid://b7givhsythdfv" path="res://Assets/Fonts/NESCyrillic.ttf" id="5_153en"]
