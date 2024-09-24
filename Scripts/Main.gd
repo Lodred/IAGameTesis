@@ -15,8 +15,13 @@ func _ready():
 		$CanvasLayer/TutorialBox.set_visible(false)
 	
 	if State.enemy_to_remove_id.size() > 0:
-		for enemy_id in State.enemy_to_remove_id:
-			remove_enemy_by_id(enemy_id)
+		if State.enemy_to_remove_id.size() == 2:
+			await get_tree().create_timer(0.1).timeout
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			get_tree().change_scene_to_file("res://Scenes/Win.tscn")
+		else:
+			for enemy_id in State.enemy_to_remove_id:
+				remove_enemy_by_id(enemy_id)
 	
 	if State.Player_alive == false:
 		State.Player_current_health = 10

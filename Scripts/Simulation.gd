@@ -82,10 +82,10 @@ func simulate_combat():
 			ally_last_action = "Special"
 			var damage = calculate_attack_damage(15, 25)  # Example special damage range
 			if enemy_defense == true:
-				print("Ally uses a special attack for ", damage-DEFEND_REDUCTION, " defense damage.")
+				#print("Ally uses a special attack for ", damage-DEFEND_REDUCTION, " defense damage.")
 				enemy_health -= (damage-DEFEND_REDUCTION)
 			else:
-				print("Ally uses a special attack for ", damage, " damage.")
+				#print("Ally uses a special attack for ", damage, " damage.")
 				enemy_health -= damage
 		else:
 			if ally_random == true:
@@ -96,16 +96,16 @@ func simulate_combat():
 				"Attack":
 					var damage = calculate_attack_damage(5, 10)  # Example damage range
 					if enemy_defense == true:
-						print("Ally attacks for ", damage-DEFEND_REDUCTION, " defense damage.")
+						#print("Ally attacks for ", damage-DEFEND_REDUCTION, " defense damage.")
 						enemy_health -= (damage-DEFEND_REDUCTION)
 					else:
-						print("Ally attacks for ", damage, " damage.")
+						#print("Ally attacks for ", damage, " damage.")
 						enemy_health -= damage
 				"Defend":
-					print("Ally defends.")
+					#print("Ally defends.")
 					ally_defense = true
 				"Special":
-					print("Ally prepares special.")
+					#print("Ally prepares special.")
 					ally_special = true
 		
 		# Update Q-table for ally
@@ -124,10 +124,10 @@ func simulate_combat():
 			enemy_last_action = "Special"
 			var damage = calculate_attack_damage(15, 25)  # Example special damage range
 			if ally_defense == true:
-				print("Enemy uses a special attack for ", damage-DEFEND_REDUCTION, " defense damage.")
+				#print("Enemy uses a special attack for ", damage-DEFEND_REDUCTION, " defense damage.")
 				ally_health -= (damage-DEFEND_REDUCTION)
 			else:
-				print("Enemy uses a special attack for ", damage, " damage.")
+				#print("Enemy uses a special attack for ", damage, " damage.")
 				ally_health -= damage
 		else:
 			if enemy_random == true:
@@ -138,16 +138,16 @@ func simulate_combat():
 				"Attack":
 					var damage = calculate_attack_damage(5, 10)  # Example damage range
 					if ally_defense == true:
-						print("Enemy attacks for ", damage-DEFEND_REDUCTION, " defense damage.")
+						#print("Enemy attacks for ", damage-DEFEND_REDUCTION, " defense damage.")
 						ally_health -= (damage-DEFEND_REDUCTION)
 					else:
-						print("Enemy attacks for ", damage, " damage.")
+						#print("Enemy attacks for ", damage, " damage.")
 						ally_health -= damage
 				"Defend":
-					print("Enemy defends.")
+					#print("Enemy defends.")
 					enemy_defense = true
 				"Special":
-					print("Enemy prepares special.")
+					#print("Enemy prepares special.")
 					enemy_special = true
 
 		# Update Q-table for enemy
@@ -352,10 +352,10 @@ func win_battle():
 	enemy_accumulated_reward += enemy_final_reward
 	save_q_tables()
 	
-	print("Ally Q-table:")
-	print(q_table_ally)
-	print("Enemy Q-table:")
-	print(q_table_enemy)
+	#print("Ally Q-table:")
+	#print(q_table_ally)
+	#print("Enemy Q-table:")
+	#print(q_table_enemy)
 
 # Function to end the combat with a loss
 func lose_battle():
@@ -369,7 +369,7 @@ func lose_battle():
 	enemy_accumulated_reward += enemy_final_reward
 	save_q_tables()
 	
-	print("Ally Q-table:")
-	print(q_table_ally)
-	print("Enemy Q-table:")
-	print(q_table_enemy)
+	#print("Ally Q-table:")
+	#print(q_table_ally)
+	#print("Enemy Q-table:")
+	#print(q_table_enemy)

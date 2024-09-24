@@ -93,7 +93,7 @@ func take_damage(damage, attacker_name, target_name):
 				kill_sound.play()
 				die()
 				State.Ally_current_health = 0
-				combat_node.set_health(combat_node.AllyHealth, State.Ally_current_health, State.AllyHealth_max_health)
+				combat_node.set_health(combat_node.AllyHealth, State.Ally_current_health, State.Ally_max_health)
 				remove_turn("Ally")
 				combat_node.check_for_allies()
 			else:

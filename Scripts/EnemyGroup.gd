@@ -178,7 +178,7 @@ func ally_attack(target_enemy, value):
 							combat_node.win_battle()
 				#He don't die but takes damage
 				else:
-					combat_node.display_text("You attack " + enemies[focused_enemy].enemy_name + " for " + str(value) + " damage!")
+					combat_node.display_text("Witch attacks " + enemies[focused_enemy].enemy_name + " for " + str(value) + " damage!")
 					await combat_node.Textbox_closed
 					enemies[target_enemy].hitBlock_sound.play()
 					enemies[target_enemy].take_damage(end_damage)
@@ -206,7 +206,7 @@ func ally_attack(target_enemy, value):
 			#If he's defending he takes less damage
 			if enemies[target_enemy].is_defending == true:
 				var end_damage = int(round(value-2))
-				combat_node.display_text("You attack " + enemies[focused_enemy].enemy_name + " for " + str(value) + " damage!")
+				combat_node.display_text("Witch attacks " + enemies[focused_enemy].enemy_name + " for " + str(value) + " damage!")
 				await combat_node.Textbox_closed
 				enemies[target_enemy].hitBlock_sound.play()
 				enemies[target_enemy].take_damage(end_damage)

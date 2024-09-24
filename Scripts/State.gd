@@ -1,7 +1,7 @@
 extends Node
 
 var ally_file_path: String = "res://Qtables/q_table_ally_default.json"
-var enemy_file_path: String = "res://Qtables/q_table_ally_default.json"
+var enemy_file_path: String = "res://Qtables/q_table_enemy_default.json"
 var reward_type: String = "mixed"
 var use_tables: bool = true
 

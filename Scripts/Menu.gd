@@ -11,6 +11,7 @@ extends Control
 @onready var CombatNumber = $Training/Panel/VBoxContainer2/Number/SpinBox
 @onready var Simulation = $Training/Panel/VBoxContainer2/Simulation/Simulate
 @onready var FileSelection = $QTables/FileDialog
+@onready var TrainText = $Training/Panel/VBoxContainer2/Training
 
 func _ready():
 	Menu.visible = true
@@ -89,10 +90,12 @@ func _on_save_training_pressed():
 
 func _on_simulation_pressed():
 	# Get the selected reward type from the Reward Script
+	TrainText.visible = true
 	await get_tree().create_timer(0.1).timeout
 	var selected_reward_type = RewardType.get_selected_reward_type()
 	# Start simulation with the selected reward type and number of combats
 	Simulation.start_sim(CombatNumber.value, selected_reward_type)
+	TrainText.visible = false
 
 func _on_reward_button_item_selected(index):
 	# Get the selected reward type from the Reward Script

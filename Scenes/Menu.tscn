@@ -1064,6 +1064,19 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_5fehk")
 text = "Train
 "
 
+[node name="HSeparator3" type="HSeparator" parent="Training/Panel/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxTexture_85ile")
+
+[node name="Training" type="Label" parent="Training/Panel/VBoxContainer2"]
+visible = false
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.74902, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "Training in process..."
+
 [node name="Save_Training" parent="Training/Panel" instance=ExtResource("4_3626f")]
 custom_minimum_size = Vector2(160, 40)
 layout_mode = 1

@@ -77,6 +77,9 @@ func _ready():
 			add_enemy_to_scene(enemy_data)
 	emit_signal("Enemies_loaded")
 	
+	print(State.ally_file_path)
+	print(State.enemy_file_path)
+	
 	player_starting_hp = State.Player_current_health
 	ally_starting_hp = State.Ally_current_health
 	reward_type = State.reward_type
@@ -227,9 +230,8 @@ func lose_battle():
 	save_q_tables()
 	display_text("All allies have been defeated!")
 	await Textbox_closed
-	await get_tree().create_timer(0.8).timeout
-	#Game Over Screen
-	get_tree().quit()
+	await get_tree().create_timer(0.4).timeout
+	get_tree().change_scene_to_file("res://Scenes/Lose.tscn")
 
 func _input(event):
 	if (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)) and State.Tutorial_Combat:
@@ -533,8 +535,10 @@ func save_q_tables():
 	if State.use_tables == false:
 		ally_combat_number += 1
 		enemy_combat_number += 1
-		save_q_table_as_json("res://Qtables/q_table_ally_manual.json", q_table_ally, ally_combat_number, ally_accumulated_reward)
-		save_q_table_as_json("res://Qtables/q_table_enemy_manual.json", q_table_enemy, enemy_combat_number, enemy_accumulated_reward)
+		if State.ally_file_path != "res://Qtables/q_table_ally_default.json":
+			save_q_table_as_json("res://Qtables/q_table_ally_manual.json", q_table_ally, ally_combat_number, ally_accumulated_reward)
+		if State.enemy_file_path != "res://Qtables/q_table_enemy_default.json":
+			save_q_table_as_json("res://Qtables/q_table_enemy_manual.json", q_table_enemy, enemy_combat_number, enemy_accumulated_reward)
 
 # Load the Q-tables at the start of the game
 func load_q_tables():
@@ -641,12 +645,10 @@ func _process(delta):
 
 func pause(state):
 	if state:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE) # Show mouse when paused
 		get_tree().paused = true # Pause the game
 		Menu.visible = true
 		# Show the pause menu
 	else:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) # Hide mouse during gameplay
 		get_tree().paused = false # Resume the game
 		Menu.visible = false
 		# Hide the pause menu

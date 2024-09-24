@@ -261,7 +261,14 @@ bg_color = Color(0, 0, 0, 0.4)
 script = ExtResource("1_75bnx")
 Enemies = Array[Resource]([ExtResource("2_ky36b"), ExtResource("2_ky36b")])
 
-[node name="Music" type="AudioStreamPlayer2D" parent="."]
+[node name="Control" type="Control" parent="."]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Music" type="AudioStreamPlayer2D" parent="Control"]
 stream = ExtResource("3_qpoa6")
 autoplay = true
 bus = &"Music"
