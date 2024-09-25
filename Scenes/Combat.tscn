@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dt8xhrg4pf8qa" path="res://Assets/Background/battleback1.png" id="1_34wcb"]
 [ext_resource type="Script" path="res://Scripts/Combat.gd" id="1_75bnx"]
 [ext_resource type="FontFile" uid="uid://b7givhsythdfv" path="res://Assets/Fonts/NESCyrillic.ttf" id="2_1ux7k"]
-[ext_resource type="Resource" uid="uid://b8d61i6pytcal" path="res://Entities/Resources/Guard.tres" id="2_ky36b"]
+[ext_resource type="Resource" uid="uid://b8d61i6pytcal" path="res://Entities/Resources/Soldier.tres" id="2_ky36b"]
 [ext_resource type="Texture2D" uid="uid://ddupqweb3gluf" path="res://Assets/GUI/GUI.png" id="2_lmv22"]
 [ext_resource type="AudioStream" uid="uid://cswnh5ip0abpu" path="res://Assets/Audio/Music/If It's a Fight You Want.ogg" id="3_qpoa6"]
 [ext_resource type="AudioStream" uid="uid://cvtuoihst4ntb" path="res://Assets/Audio/SFX/Click.wav" id="4_l1w8d"]

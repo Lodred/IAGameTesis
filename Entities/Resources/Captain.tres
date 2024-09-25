@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bia812pmr463h"]
+
+[ext_resource type="Script" path="res://Entities/BaseEnemy.gd" id="1_lomiv"]
+[ext_resource type="Texture2D" uid="uid://cae5irm0ucdag" path="res://Assets/Sprites/Human5.png" id="2_rj34w"]
+
+[resource]
+script = ExtResource("1_lomiv")
+name = "Guard"
+texture = ExtResource("2_rj34w")
+max_health = 40
+max_damage = 6
+min_damage = 3
+speed = 8

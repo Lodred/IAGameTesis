@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://b8d61i6pytcal"]
+
+[ext_resource type="Script" path="res://Entities/BaseEnemy.gd" id="1_mf5i6"]
+[ext_resource type="Texture2D" uid="uid://bjewi73nvwyo6" path="res://Assets/Sprites/Human3.png" id="2_7kh8k"]
+
+[resource]
+script = ExtResource("1_mf5i6")
+name = "Soldier"
+texture = ExtResource("2_7kh8k")
+max_health = 25
+max_damage = 4
+min_damage = 3
+speed = 8
