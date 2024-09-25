@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cv2n3xldsx47o"
-path="res://.godot/imported/umOkU4zxejbwV3cgehQ_-.png-9648b6fa5cffde8f799fffcd523d5ec4.ctex"
+uid="uid://dst7tojv35idk"
+path="res://.godot/imported/skeleton_sprite.png-2e847221c0df2c5bf7a2ff69d7d6606a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Portraits/umOkU4zxejbwV3cgehQ_-.png"
-dest_files=["res://.godot/imported/umOkU4zxejbwV3cgehQ_-.png-9648b6fa5cffde8f799fffcd523d5ec4.ctex"]
+source_file="res://Assets/Portraits/skeleton_sprite.png"
+dest_files=["res://.godot/imported/skeleton_sprite.png-2e847221c0df2c5bf7a2ff69d7d6606a.ctex"]
 
 [params]
 

@@ -77,8 +77,8 @@ func _ready():
 			add_enemy_to_scene(enemy_data)
 	emit_signal("Enemies_loaded")
 	
-	print(State.ally_file_path)
-	print(State.enemy_file_path)
+	#print(State.ally_file_path)
+	#print(State.enemy_file_path)
 	
 	player_starting_hp = State.Player_current_health
 	ally_starting_hp = State.Ally_current_health

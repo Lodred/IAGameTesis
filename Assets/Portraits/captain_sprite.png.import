@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://h3lmdujghu5f"
-path="res://.godot/imported/MyeZKwNYbtZPg9IK1ibpR.png-587584f145a1540355265b23c0a03b7d.ctex"
+uid="uid://c5lhhjauybe15"
+path="res://.godot/imported/captain_sprite.png-1a18bd7944daf66edb069cb7c42097bd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Portraits/MyeZKwNYbtZPg9IK1ibpR.png"
-dest_files=["res://.godot/imported/MyeZKwNYbtZPg9IK1ibpR.png-587584f145a1540355265b23c0a03b7d.ctex"]
+source_file="res://Assets/Portraits/captain_sprite.png"
+dest_files=["res://.godot/imported/captain_sprite.png-1a18bd7944daf66edb069cb7c42097bd.ctex"]
 
 [params]
 

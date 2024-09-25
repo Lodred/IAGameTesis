@@ -15,7 +15,8 @@ func _ready():
 		$CanvasLayer/TutorialBox.set_visible(false)
 	
 	if State.enemy_to_remove_id.size() > 0:
-		if State.enemy_to_remove_id.size() == 2:
+		if State.enemy_to_remove_id.has(2):
+			# End the game by changing the scene to a game over or similar scene
 			await get_tree().create_timer(0.1).timeout
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			get_tree().change_scene_to_file("res://Scenes/Win.tscn")
@@ -34,7 +35,6 @@ func remove_enemy_by_id(id):
 		if child.has_method("enemy") and child.id == id:
 			enemy_to_remove = child
 			child.queue_free()
-			break
 
 func _input(event):
 	if event is InputEventKey and event.pressed:

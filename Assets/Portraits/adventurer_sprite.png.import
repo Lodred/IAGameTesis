@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0c2x2wq5x5h8"
-path="res://.godot/imported/aROm130vkjkK6UFW-EJso.png-f8e291c9f2c7ccde9a2f4120c70d2ffd.ctex"
+uid="uid://bkcxouchpudeu"
+path="res://.godot/imported/adventurer_sprite.png-aa5719b118077996735b9434d245a7fc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Portraits/aROm130vkjkK6UFW-EJso.png"
-dest_files=["res://.godot/imported/aROm130vkjkK6UFW-EJso.png-f8e291c9f2c7ccde9a2f4120c70d2ffd.ctex"]
+source_file="res://Assets/Portraits/adventurer_sprite.png"
+dest_files=["res://.godot/imported/adventurer_sprite.png-aa5719b118077996735b9434d245a7fc.ctex"]
 
 [params]
 

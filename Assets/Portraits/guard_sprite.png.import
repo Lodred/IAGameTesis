@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhbgkim5acyku"
-path="res://.godot/imported/ip7sPHNiyeiT3uyA4tS-z.png-0382e1d51fc2d4009ee89fa6d2c8646d.ctex"
+uid="uid://bvijdgq6y47sy"
+path="res://.godot/imported/guard_sprite.png-9cbab6c04de00630b834c9a65f648173.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Portraits/ip7sPHNiyeiT3uyA4tS-z.png"
-dest_files=["res://.godot/imported/ip7sPHNiyeiT3uyA4tS-z.png-0382e1d51fc2d4009ee89fa6d2c8646d.ctex"]
+source_file="res://Assets/Portraits/guard_sprite.png"
+dest_files=["res://.godot/imported/guard_sprite.png-9cbab6c04de00630b834c9a65f648173.ctex"]
 
 [params]
 

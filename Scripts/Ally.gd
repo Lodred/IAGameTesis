@@ -8,14 +8,6 @@ extends CharacterBody2D
 var health: int = 25
 var speed: int = 40
 
-#Delete all non related to movement stats
-@export var Enemies: Array[Resource] = []
-@export var dialogues = [
-	{"text": "Who goes there?", "character_name": "Guard", "sprite": "res://guard_sprite.png"},
-	{"text": "You cannot pass!", "character_name": "Guard", "sprite": "res://guard_sprite.png"},
-	{"text": "Prepare to fight!", "character_name": "Guard", "sprite": "res://guard_sprite.png"}
-]  # Default dialogues (can be customized per enemy instance)
-
 @export var initial_direction = Vector2(0, 1) # Default facing down
 
 var knockback_direction = Vector2.ZERO
@@ -36,15 +28,9 @@ func _ready():
 
 func _physics_process(delta):
 	await get_tree().create_timer(0.8).timeout
-	if enemy_in_range and not attack_cooldown:
-		attack()
-	if not is_attacking:
-		if see_player and not dialogue_started:
-			start_dialogue()  # Start the dialogue when the player is seen
-		else:
-			animTree.get("parameters/playback").travel("Idle")
-		knockback_direction = move_direction
-		knockback = knockback.move_toward(Vector2.ZERO, 200 * delta)
+	animTree.get("parameters/playback").travel("Idle")
+	knockback_direction = move_direction
+	knockback = knockback.move_toward(Vector2.ZERO, 200 * delta)
 	
 func accelerate_towards_point(point, delta):
 	var movement = move_direction * speed
@@ -80,40 +66,6 @@ func _on_enemy_hitbox_body_exited(body):
 			enemy_in_range = false
 	else:
 		pass
-
-func attack():
-	is_attacking = true
-	attack_cooldown = true
-	$AttackCooldown.start()
-	# Trigger attack animation
-	$AnimationTree.get("parameters/playback").travel("Stab_Attack")
-	for otherbody in hitbox.get_overlapping_bodies():
-		if (otherbody.has_method("player") or otherbody.has_method("ally")):
-			await get_tree().create_timer(0.8).timeout
-			State.Enemies = Enemies
-			State.player_position = otherbody.position
-			State.enemy_to_remove_id.append(id)
-			get_tree().change_scene_to_file("res://Scenes/Combat.tscn")
-			#otherbody.enemy_attack(damage)
-
-# Start the dialogue for this specific enemy
-func start_dialogue():
-	dialogue_started = true  # Ensure this only triggers once
-	State.current_dialogues = dialogues  # Pass the current enemy's dialogues to the global State
-	var dialogue_manager = get_tree().root.get_node("World/Dialogue_control")  # Ensure you get the right path
-	dialogue_manager.start_dialogue(self, "on_dialogue_finished")
-
-# This function will be called when the dialogue finishes
-func on_dialogue_finished():
-	var player = get_parent().get_node("Player")
-	proceed_to_combat(player)
-
-# Transition to combat after dialogue ends
-func proceed_to_combat(player):
-	State.Enemies = Enemies
-	State.player_position = player.position
-	State.enemy_to_remove_id.append(id)
-	get_tree().change_scene_to_file("res://Scenes/Combat.tscn")
 
 func finish_attack():
 	is_attacking = false

@@ -26,6 +26,19 @@ var Ally_max_damage = 6
 var Ally_min_damage = 3
 
 var Enemies: Array[Resource] = []
+var current_dialogues = []
+
+func reset_State():
+	Player_alive = true
+	Ally_alive = true
+	enemy_to_remove_id = []
+	current_dialogues = []
+	Enemies = []
+	Player_current_health = 80
+	Ally_current_health = 60
+	player_position = Vector2(136, -314)
+	Tutorial_Main = true
+	Tutorial_Combat = true
 
 func save_player_position(position):
 	player_position = position

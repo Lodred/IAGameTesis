@@ -13,6 +13,7 @@ var knockback = Vector2.ZERO
 @export var is_attacking = false
 @export var enemy_in_range = false
 @export var attack_cooldown = false
+var can_move = true
 
 func _ready():
 	# Ensure AnimationTree is active
@@ -20,11 +21,12 @@ func _ready():
 
 func _physics_process(delta):
 	# Movement
-	if is_attacking == false:
+	if is_attacking == false and can_move:
 		move_player()
 	# Attack
 	if Input.is_action_just_pressed("Attack") and attack_cooldown == false:
-		attack()
+		pass
+		#attack()
 
 func move_player():
 	var input_vector = Vector2.ZERO
@@ -86,3 +88,13 @@ func player():
 
 func _on_attack_cooldown_timeout():
 	attack_cooldown = false
+
+# Call this method to disable movement when dialogue starts
+func disable_movement():
+	can_move = false
+	$AnimationTree.get("parameters/playback").travel("Idle")
+	playerWalkingAudioStream.stop()
+
+# Call this method to enable movement when dialogue ends
+func enable_movement():
+	can_move = true

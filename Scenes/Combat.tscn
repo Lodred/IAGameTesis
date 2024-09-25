@@ -488,7 +488,7 @@ size_flags_horizontal = 6
 size_flags_stretch_ratio = 0.3
 theme_override_fonts/font = ExtResource("2_1ux7k")
 theme_override_font_sizes/font_size = 30
-text = "Ally"
+text = "Lilith"
 horizontal_alignment = 1
 vertical_alignment = 1
 
