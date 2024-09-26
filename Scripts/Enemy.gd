@@ -110,6 +110,7 @@ func on_dialogue_finished():
 
 # Transition to combat after dialogue ends
 func proceed_to_combat(player):
+	await get_tree().create_timer(0.1).timeout
 	State.Enemies = Enemies
 	State.player_position = player.position
 	State.enemy_to_remove_id.append(id)
