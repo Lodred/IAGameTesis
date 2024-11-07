@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cg60hfkrsqlwx"]
+[gd_scene load_steps=23 format=3 uid="uid://cg60hfkrsqlwx"]
 
 [ext_resource type="Script" path="res://Scripts/Menu.gd" id="1_1cmo4"]
 [ext_resource type="Texture2D" uid="uid://01nxjt5ju0dj" path="res://Assets/Background/MainMenu.png" id="1_pgxi5"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://Scripts/FileSelection.gd" id="8_cxl8e"]
 [ext_resource type="Script" path="res://Scripts/RewardButton.gd" id="8_nw2o1"]
 [ext_resource type="Script" path="res://Scripts/Simulation.gd" id="9_js3ng"]
+[ext_resource type="Texture2D" uid="uid://bkt5ji0egduyv" path="res://Assets/Background/Tutorial3.png" id="12_hgr4j"]
+[ext_resource type="Script" path="res://Addons/label_font_auto_sizer/label_auto_sizer.gd" id="13_8wf4h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1n4yt"]
 bg_color = Color(0.160784, 0.168627, 0.176471, 0.705882)
@@ -82,6 +84,26 @@ shadow_size = 1
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u342p"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_85ile"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_car5f"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gkxxc"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -1105,6 +1127,114 @@ text = "Save
 stream = ExtResource("5_cy422")
 autoplay = true
 bus = &"Music"
+
+[node name="Tutorial" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TutorialBox" type="Panel" parent="Tutorial"]
+z_index = 5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.671875
+anchor_top = 0.498457
+anchor_right = 0.671875
+anchor_bottom = 0.498457
+offset_left = 497.125
+offset_top = 103.062
+offset_right = 997.125
+offset_bottom = 503.062
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_car5f")
+metadata/_edit_use_anchors_ = true
+
+[node name="ImagePanel" type="Panel" parent="Tutorial/TutorialBox"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.0525
+anchor_right = 1.0
+anchor_bottom = 0.61
+offset_left = 25.0
+offset_top = 9.0
+offset_right = -25.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gkxxc")
+metadata/_edit_use_anchors_ = true
+
+[node name="Image" type="TextureRect" parent="Tutorial/TutorialBox/ImagePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_hgr4j")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="Tutorial/TutorialBox"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.017
+anchor_top = 0.02
+anchor_right = 0.983
+anchor_bottom = 0.075
+offset_left = -0.5
+offset_top = -1.0
+offset_right = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_s8rv7")
+theme_override_font_sizes/font_size = 18
+text = "Tutorial de Configuración IA"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("13_8wf4h")
+_size_just_modified_by_autosizer = false
+_set_defaults = true
+_base_font_size = 18
+_current_font_size = 18
+_last_size_state = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Text" type="Label" parent="Tutorial/TutorialBox"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.015
+anchor_top = 0.64
+anchor_right = 0.981
+anchor_bottom = 0.98
+offset_left = -0.5
+offset_top = -1.0
+offset_right = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_s8rv7")
+theme_override_font_sizes/font_size = 15
+text = "- Q-Table: En esta pestaña puedes seleccionar una Q-Table para utilizar en el aliado o en el enemigo. También puedes seleccionar para iniciar sin una Q-Table.
+
+- Training: En esta pestaña puedes entrenar una Q-Table seleccionando el sistema de recompensas y el número de combates a simular.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("13_8wf4h")
+_size_just_modified_by_autosizer = false
+_set_defaults = true
+_base_font_size = 15
+_current_font_size = 15
+_last_size_state = 1
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="MainMenu/Panel/HBoxContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MainMenu/Panel/HBoxContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]

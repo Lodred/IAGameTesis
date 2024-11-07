@@ -12,6 +12,7 @@ extends Control
 @onready var Simulation = $Training/Panel/VBoxContainer2/Simulation/Simulate
 @onready var FileSelection = $QTables/FileDialog
 @onready var TrainText = $Training/Panel/VBoxContainer2/Training
+@onready var TutorialBox = $Tutorial
 
 func _ready():
 	Menu.visible = true
@@ -70,24 +71,30 @@ func _on_borderless_toggled(toggled_on):
 func _on_agents_pressed():
 	Menu.visible = false
 	Agents.visible = true
+	TutorialBox.set_visible(true)
 
 func _on_back_agents_pressed():
 	Agents.visible = false
 	Menu.visible = true
+	TutorialBox.set_visible(false)
 
 func _on_q_tables_pressed():
 	Training.visible = false
 	Tables.visible = true
+	TutorialBox.set_visible(false)
 
 func _on_save_tables_pressed():
 	Tables.visible = false
+	TutorialBox.set_visible(true)
 
 func _on_training_pressed():
 	Tables.visible = false
 	Training.visible = true
+	TutorialBox.set_visible(false)
 
 func _on_save_training_pressed():
 	Training.visible = false
+	TutorialBox.set_visible(true)
 
 func _on_simulation_pressed():
 	# Get the selected reward type from the Reward Script
